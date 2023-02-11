@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <BorderPane layoutX="116.0" layoutY="177.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <top>
+                  <AnchorPane prefHeight="45.0" prefWidth="200.0" styleClass="semi-top-form" stylesheets="@../../css/DashboardDesign.css" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane layoutX="1.0" layoutY="-77.0" prefHeight="35.0" prefWidth="1100.0" styleClass="top-form" stylesheets="@../../css/DashboardDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <FontAwesomeIconView glyphName="USERS" layoutX="14.0" layoutY="27.0" size="1.5em" />
+                              <Label layoutX="37.0" layoutY="11.0" text="Sistema de control de Clientes">
+                                 <font>
+                                    <Font name="Tahoma" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="1044.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" styleClass="close" stylesheets="@../../css/DashboardDesign.css" AnchorPane.leftAnchor="1044.0">
+                                 <graphic>
+                                    <FontAwesomeIconView glyphName="CLOSE" size="1.5em" text="" />
+                                 </graphic>
+                              </Button>
+                              <Button layoutX="989.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" styleClass="minimize" stylesheets="@../../css/DashboardDesign.css">
+                                 <graphic>
+                                    <FontAwesomeIconView glyphName="MINUS" />
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </top>
+               <left>
+                  <AnchorPane prefHeight="555.0" prefWidth="211.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane layoutX="-22.0" layoutY="33.0" prefHeight="555.0" prefWidth="211.0" styleClass="nav-form" stylesheets="@../../css/DashboardDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <FontAwesomeIconView fill="WHITE" glyphName="USER" layoutX="76.0" layoutY="112.0" size="7em" />
+                              <Label alignment="CENTER" layoutX="6.0" layoutY="133.0" prefHeight="23.0" prefWidth="197.0" text="Bienvenido" textFill="WHITE">
+                                 <font>
+                                    <Font name="Tahoma" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="5.0" layoutY="155.0" prefHeight="23.0" prefWidth="199.0" text="Walter" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Line endX="90.0" layoutX="103.0" layoutY="189.0" startX="-85.0" stroke="WHITE" />
+                              <Button layoutX="16.0" layoutY="213.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../../css/DashboardDesign.css" text="Home">
+                                 <graphic>
+                                    <FontAwesomeIconView glyphName="HOME" size="1.5em" />
+                                 </graphic>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="17.0" layoutY="266.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../../css/DashboardDesign.css" text="Añadir Alumno">
+                                 <graphic>
+                                    <FontAwesomeIconView glyphName="PLUS" size="1.5em" />
+                                 </graphic>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="17.0" layoutY="319.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../../css/DashboardDesign.css" text="Administrar Pagos">
+                                 <graphic>
+                                    <FontAwesomeIconView glyphName="MONEY" />
+                                 </graphic>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="15.0" layoutY="503.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" styleClass="logout" stylesheets="@../../css/DashboardDesign.css" text="Salir">
+                                 <graphic>
+                                    <FontAwesomeIconView glyphName="SIGN_OUT" size="1.8em" />
+                                 </graphic>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </left>
+               <center>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane layoutX="122.0" layoutY="144.0" prefHeight="555.0" prefWidth="889.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+               </center>
+            </BorderPane>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

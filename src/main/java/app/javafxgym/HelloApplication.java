@@ -2,7 +2,7 @@ package app.javafxgym;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent; // añadido por las dudas quitar si no funciona
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -42,7 +42,6 @@ public class HelloApplication extends Application {
         stage.setTitle("Bonati System");
         stage.setScene(scene);
         stage.show();
-        //stage.setFullScreen(true); setea full screen, se debe arreglar literalmente tamaño de el programa en scenebuilder
 
     }
 

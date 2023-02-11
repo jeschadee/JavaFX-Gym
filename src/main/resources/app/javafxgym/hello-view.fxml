@@ -17,7 +17,7 @@
             <children>
                 <AnchorPane layoutX="400.0" prefHeight="600.0" prefWidth="400.0" styleClass="right-form" stylesheets="@../../css/LoginDesign.css">
                     <children>
-                        <TextField fx:id="username" layoutX="43.0" layoutY="230.0" prefHeight="40.0" prefWidth="300.0" promptText="Usuario">
+                        <TextField fx:id="username" layoutX="43.0" layoutY="230.0" onAction="#loginAdmin" prefHeight="40.0" prefWidth="300.0" promptText="Usuario">
                             <font>
                                 <Font size="18.0" />
                             </font>
@@ -27,17 +27,17 @@
                                 <Font name="System Bold" size="36.0" />
                             </font>
                         </Label>
-                        <Button fx:id="loginBtn" layoutX="43.0" layoutY="410.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" styleClass="login-btn" text="Entrar">
+                        <Button fx:id="loginBtn" layoutX="43.0" layoutY="410.0" mnemonicParsing="false" onAction="#loginAdmin" prefHeight="50.0" prefWidth="300.0" styleClass="login-btn" text="Entrar">
                             <font>
                                 <Font name="System Bold" size="18.0" />
                             </font>
                         </Button>
-                        <Button fx:id="close" layoutX="340.0" layoutY="-3.6" mnemonicParsing="false" onAction="#close" prefHeight="28.0" prefWidth="58.0" styleClass="close" stylesheets="@../../css/LoginDesign.css" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="-4.0">
+                        <Button fx:id="close" layoutX="345.0" layoutY="-2.0" mnemonicParsing="false" onAction="#close" prefHeight="28.0" prefWidth="58.0" styleClass="close" stylesheets="@../../css/LoginDesign.css" AnchorPane.rightAnchor="-3.0" AnchorPane.topAnchor="-2.0">
                             <graphic>
                                 <FontAwesomeIconView glyphName="CLOSE" size="1.2em" textAlignment="CENTER" wrappingWidth="31.428571701049805" />
                             </graphic>
                         </Button>
-                  <PasswordField fx:id="password" layoutX="43.0" layoutY="288.0" prefHeight="40.0" prefWidth="300.0" promptText="Contraseña">
+                  <PasswordField fx:id="password" layoutX="43.0" layoutY="288.0" onAction="#loginAdmin" prefHeight="40.0" prefWidth="300.0" promptText="Contraseña">
                      <font>
                         <Font size="18.0" />
                      </font>
