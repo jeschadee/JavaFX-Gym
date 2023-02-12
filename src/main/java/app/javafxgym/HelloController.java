@@ -109,7 +109,6 @@ public class HelloController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
 
