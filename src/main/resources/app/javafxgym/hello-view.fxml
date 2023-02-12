@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.javafxgym.HelloController">
+    <children>
+        <AnchorPane fx:id="main_form" prefHeight="200.0" prefWidth="200.0" stylesheets="@../../css/LoginDesign.css">
+            <children>
+                <AnchorPane layoutX="400.0" prefHeight="600.0" prefWidth="400.0" styleClass="right-form" stylesheets="@../../css/LoginDesign.css">
+                    <children>
+                        <TextField fx:id="username" layoutX="43.0" layoutY="230.0" onAction="#loginAdmin" prefHeight="40.0" prefWidth="300.0" promptText="Usuario">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </TextField>
+                        <Label layoutX="35.0" layoutY="97.0" text="Control de Clientes" textFill="#1b1919">
+                            <font>
+                                <Font name="System Bold" size="36.0" />
+                            </font>
+                        </Label>
+                        <Button fx:id="loginBtn" layoutX="43.0" layoutY="410.0" mnemonicParsing="false" onAction="#loginAdmin" prefHeight="50.0" prefWidth="300.0" styleClass="login-btn" text="Entrar">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="close" layoutX="345.0" layoutY="-2.0" mnemonicParsing="false" onAction="#close" prefHeight="28.0" prefWidth="58.0" styleClass="close" stylesheets="@../../css/LoginDesign.css" AnchorPane.rightAnchor="-3.0" AnchorPane.topAnchor="-2.0">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="CLOSE" size="1.2em" textAlignment="CENTER" wrappingWidth="31.428571701049805" />
+                            </graphic>
+                        </Button>
+                  <PasswordField fx:id="password" layoutX="43.0" layoutY="288.0" onAction="#loginAdmin" prefHeight="40.0" prefWidth="300.0" promptText="Contraseña">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </PasswordField>
+                    </children>
+                </AnchorPane>
+            <AnchorPane prefHeight="600.0" prefWidth="400.0" styleClass="left-form" stylesheets="@../../css/LoginDesign.css">
+               <children>
+                  <ImageView fitHeight="405.0" fitWidth="355.0" layoutX="27.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../image/LOGO%20PLATEADO%20copia.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+            </children>
+        </AnchorPane>
+    </children>
+</StackPane>

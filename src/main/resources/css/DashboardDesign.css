@@ -1,0 +1,59 @@
+.top-form{
+    -fx-background-color:#fff;
+    -fx-border-color:#000;
+    -fx-border-width: .4px .2px .4px .4px;
+}
+
+.semi-top-form{
+    -fx-background-color:#efefef;
+    -fx-border-color:#000;
+    -fx-border-width: .4px .2px .4px .4px;
+}
+
+.close{
+    -fx-background-color:transparent;
+    -fx-cursor:hand;
+}
+
+.close:hover{
+    -fx-background-color:#e40505;
+}
+
+.minimize{
+    -fx-background-color:transparent;
+    -fx-cursor:hand;
+}
+
+.minimize:hover{
+    -fx-background-color:#ddd;
+}
+
+.nav-form{
+    -fx-background-color:black;
+}
+
+.nav-btn{
+    -fx-background-color:#efefef;
+    -fx-cursor:hand;
+    -fx-background-radius:50px;
+}
+
+.logout{
+    -fx-background-color:#efefef;
+    -fx-background-radius:50px;
+    -fx-cursor:hand;
+}
+
+.white-bg{
+    -fx-background-color:#efefef;
+    -fx-background-radius:10px;
+}
+
+.shadow{
+    -fx-effect:dropshadow(three-pass-box, rgba(0,0,0,0.5), 6,0,0,0);
+}
+
+.card{
+    -fx-background-color:black;
+    -fx-background-radius:15px;
+}
