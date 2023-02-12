@@ -102,7 +102,6 @@ public class HelloController implements Initializable {
                     alert.setContentText("Usuario o contraseña incorrecta");
                     alert.showAndWait();
 
-
                 }
 
             }

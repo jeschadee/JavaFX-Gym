@@ -43,3 +43,17 @@
     -fx-background-radius:50px;
     -fx-cursor:hand;
 }
+
+.white-bg{
+    -fx-background-color:#efefef;
+    -fx-background-radius:10px;
+}
+
+.shadow{
+    -fx-effect:dropshadow(three-pass-box, rgba(0,0,0,0.5), 6,0,0,0);
+}
+
+.card{
+    -fx-background-color:black;
+    -fx-background-radius:15px;
+}
