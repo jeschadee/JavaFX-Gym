@@ -18,6 +18,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ResourceBundle;
 
+import static app.javafxgym.database.connectdb;
+
 public class HelloController implements Initializable {
 
     @FXML
@@ -52,7 +54,7 @@ public class HelloController implements Initializable {
 
         String sql = "SELECT * FROM admin WHERE username = ? and password = ?";
 
-        connect = database.connectdb();
+        connect = connectdb();
 
         try {
 
@@ -89,6 +91,12 @@ public class HelloController implements Initializable {
                     root.setOnMouseDragged((MouseEvent event) -> {
                         stage.setX(event.getScreenX() - x);
                         stage.setY(event.getScreenY() - y);
+
+                        stage.setOpacity(.8);
+                    });
+
+                    root.setOnMouseReleased((MouseEvent event) ->{
+                        stage.setOpacity(1);
                     });
 
                     stage.initStyle(StageStyle.TRANSPARENT);
