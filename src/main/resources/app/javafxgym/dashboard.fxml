@@ -56,7 +56,7 @@
                         <AnchorPane layoutX="-22.0" layoutY="33.0" prefHeight="555.0" prefWidth="211.0" styleClass="nav-form" stylesheets="@../../css/DashboardDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <Line endX="90.0" layoutX="103.0" layoutY="189.0" startX="-85.0" stroke="WHITE" />
-                              <Button layoutX="16.0" layoutY="213.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../../css/DashboardDesign.css" text="Home" textFill="#111111">
+                              <Button fx:id="Inicio_btn" layoutX="16.0" layoutY="213.0" mnemonicParsing="false" onAction="#CambiarForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../../css/DashboardDesign.css" text="Inicio" textFill="#111111">
                                  <graphic>
                                     <FontAwesomeIconView glyphName="HOME" size="1.5em" />
                                  </graphic>
@@ -64,7 +64,7 @@
                                     <Font size="16.0" />
                                  </font>
                               </Button>
-                              <Button layoutX="17.0" layoutY="266.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../../css/DashboardDesign.css" text="Añadir Alumno">
+                              <Button fx:id="Anadir_btn" layoutX="17.0" layoutY="266.0" mnemonicParsing="false" onAction="#CambiarForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../../css/DashboardDesign.css" text="Añadir Alumno">
                                  <graphic>
                                     <FontAwesomeIconView glyphName="USER_PLUS" size="1.5em" />
                                  </graphic>
@@ -72,7 +72,7 @@
                                     <Font size="16.0" />
                                  </font>
                               </Button>
-                              <Button layoutX="17.0" layoutY="319.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../../css/DashboardDesign.css" text="Administrar Pagos">
+                              <Button fx:id="Pagos_btn" layoutX="17.0" layoutY="319.0" mnemonicParsing="false" onAction="#CambiarForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../../css/DashboardDesign.css" text="Administrar Pagos">
                                  <graphic>
                                     <FontAwesomeIconView glyphName="MONEY" />
                                  </graphic>
@@ -80,7 +80,7 @@
                                     <Font size="16.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="Salir" layoutX="15.0" layoutY="503.0" mnemonicParsing="false" onAction="#CerrarSession" prefHeight="35.0" prefWidth="180.0" stylesheets="@../../css/DashboardDesign.css" text="Salir">
+                              <Button fx:id="Salir_btn" layoutX="15.0" layoutY="503.0" mnemonicParsing="false" onAction="#CerrarSession" prefHeight="35.0" prefWidth="180.0" stylesheets="@../../css/DashboardDesign.css" text="Salir">
                                  <graphic>
                                     <FontAwesomeIconView glyphName="SIGN_OUT" size="1.8em" />
                                  </graphic>
@@ -105,7 +105,7 @@
                <center>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane layoutX="6.0" layoutY="7.0" prefHeight="541.0" prefWidth="879.0" stylesheets="@../../css/DashboardDesign.css" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="7.0">
+                        <AnchorPane fx:id="Inicio_Form" layoutX="6.0" layoutY="7.0" prefHeight="541.0" prefWidth="879.0" stylesheets="@../../css/DashboardDesign.css" visible="false" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="7.0">
                            <children>
                               <AnchorPane layoutX="1.0" prefHeight="293.0" prefWidth="878.0" stylesheets="@../../css/DashboardDesign.css">
                                  <styleClass>
@@ -199,7 +199,7 @@
                               <String fx:value="shadow" />
                            </styleClass>
                         </AnchorPane>
-                        <AnchorPane layoutX="122.0" layoutY="144.0" prefHeight="555.0" prefWidth="889.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="Pagos_Form" layoutX="122.0" layoutY="144.0" prefHeight="555.0" prefWidth="889.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="7.0" layoutY="8.0" prefHeight="540.0" prefWidth="877.0" stylesheets="@../../css/DashboardDesign.css">
                                  <styleClass>
@@ -283,7 +283,7 @@
                                  </children>
                               </AnchorPane>
                            </children></AnchorPane>
-                        <AnchorPane prefHeight="555.0" prefWidth="894.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="Anadir_Form" prefHeight="555.0" prefWidth="894.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="5.0" layoutY="10.0" prefHeight="535.0" prefWidth="196.0" stylesheets="@../../css/DashboardDesign.css">
                                  <styleClass>

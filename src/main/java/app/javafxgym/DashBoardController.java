@@ -1,5 +1,6 @@
 package app.javafxgym;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,7 +19,17 @@ import java.util.ResourceBundle;
 public class DashBoardController implements Initializable {
 
     @FXML
-    private AnchorPane Ventana_Principal;
+    private AnchorPane Anadir_Form;
+
+    @FXML
+    private Button Anadir_btn;
+
+    @FXML
+    private AnchorPane Inicio_Form;
+
+    @FXML
+    private Button Inicio_btn;
+
     @FXML
     private TextField Modificar_Apellido;
 
@@ -78,8 +89,18 @@ public class DashBoardController implements Initializable {
 
     @FXML
     private TextField Modificar_TelefonoAuxiliar;
+
     @FXML
-    private Button salir;
+    private AnchorPane Pagos_Form;
+
+    @FXML
+    private Button Pagos_btn;
+
+    @FXML
+    private Button Salir_btn;
+
+    @FXML
+    private AnchorPane Ventana_Principal;
 
     public void Cerrar(){
         System.exit(0);
@@ -93,6 +114,23 @@ public class DashBoardController implements Initializable {
     private double x = 0;
     private double y = 0;
 
+    public void CambiarForm(ActionEvent event) {
+        if (event.getSource() == Inicio_btn) {
+            Inicio_Form.setVisible(true);
+            Pagos_Form.setVisible(false);
+            Anadir_Form.setVisible(false);
+        } else if (event.getSource() == Pagos_btn) {
+            Pagos_Form.setVisible(true);
+            Inicio_Form.setVisible(false);
+            Anadir_Form.setVisible(false);
+        }
+        else if(event.getSource() == Anadir_btn) {
+            Anadir_Form.setVisible(true);
+            Inicio_Form.setVisible(false);
+            Pagos_Form.setVisible(false);
+        }
+    }
+
     public void CerrarSession(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmación");
@@ -101,7 +139,7 @@ public class DashBoardController implements Initializable {
         Optional<ButtonType> option = alert.showAndWait();
         try{
             if(option.get().equals(ButtonType.OK)){
-                salir.getScene().getWindow().hide();
+                Ventana_Principal.getScene().getWindow().hide();
                 Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
                 Stage stage = new Stage();
                 Scene scene = new Scene(root);
