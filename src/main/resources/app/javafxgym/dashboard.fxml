@@ -105,7 +105,7 @@
                <center>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane fx:id="Inicio_Form" layoutX="6.0" layoutY="7.0" prefHeight="541.0" prefWidth="879.0" stylesheets="@../../css/DashboardDesign.css" visible="false" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="7.0">
+                        <AnchorPane fx:id="Inicio_Form" layoutX="6.0" layoutY="7.0" prefHeight="541.0" prefWidth="879.0" stylesheets="@../../css/DashboardDesign.css" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="7.0">
                            <children>
                               <AnchorPane layoutX="1.0" prefHeight="293.0" prefWidth="878.0" stylesheets="@../../css/DashboardDesign.css">
                                  <styleClass>
@@ -113,67 +113,67 @@
                                     <String fx:value="shadow" />
                                  </styleClass>
                                  <children>
-                                    <TableView layoutX="7.0" layoutY="45.0" prefHeight="239.0" prefWidth="864.0">
+                                    <TableView fx:id="TablaPrincipalID" layoutX="7.0" layoutY="45.0" onMouseClicked="#AgregarAlumnoSeleccionado" prefHeight="239.0" prefWidth="864.0">
                                       <columns>
-                                        <TableColumn prefWidth="42.0" text="ID" />
-                                        <TableColumn prefWidth="89.0" text="Nombre" />
-                                          <TableColumn prefWidth="77.0" text="Apellido" />
-                                          <TableColumn text="DNI" />
-                                          <TableColumn prefWidth="87.0" text="Telefono" />
-                                          <TableColumn prefWidth="99.0" text="Telefono Aux" />
-                                          <TableColumn prefWidth="99.0" text="Obra Social" />
-                                          <TableColumn prefWidth="122.0" text="Domicilio" />
-                                          <TableColumn prefWidth="114.0" text="Fecha Nacimiento" />
-                                          <TableColumn prefWidth="54.0" text="Edad" />
+                                        <TableColumn fx:id="ClienteIdTabla" prefWidth="42.0" text="ID" />
+                                        <TableColumn fx:id="NombreClienteTabla" prefWidth="89.0" text="Nombre" />
+                                          <TableColumn fx:id="ApellidoClienteTabla" prefWidth="77.0" text="Apellido" />
+                                          <TableColumn fx:id="DniClienteTabla" text="DNI" />
+                                          <TableColumn fx:id="TelefonoClienteTabla" prefWidth="87.0" text="Telefono" />
+                                          <TableColumn fx:id="TelefonoAuxClienteTabla" prefWidth="99.0" text="Telefono Aux" />
+                                          <TableColumn fx:id="ObraSocialClienteTabla" prefWidth="99.0" text="Obra Social" />
+                                          <TableColumn fx:id="DomicilioClienteTabla" prefWidth="122.0" text="Domicilio" />
+                                          <TableColumn fx:id="FechaNacimientoClienteTabla" prefWidth="114.0" text="Fecha Nacimiento" />
+                                          <TableColumn fx:id="EdadClienteTabla" prefWidth="54.0" text="Edad" />
                                       </columns>
                                     </TableView>
                                     <TextField layoutX="8.0" layoutY="9.0" prefHeight="30.0" prefWidth="269.0" promptText="      Buscar" styleClass="search" stylesheets="@../../css/DashboardDesign.css" />
                                     <FontAwesomeIconView glyphName="SEARCH" layoutX="14.0" layoutY="30.0" size="1.5em" />
                                  </children>
                               </AnchorPane>
-                              <TextField layoutX="130.0" layoutY="310.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
+                              <TextField fx:id="CampoNombre" layoutX="130.0" layoutY="310.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
                               <Label layoutX="20.0" layoutY="360.0" prefHeight="15.0" prefWidth="105.0" text="Apellido:">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="130.0" layoutY="355.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
+                              <TextField fx:id="CampoApellido" layoutX="130.0" layoutY="355.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
                               <Label layoutX="20.0" layoutY="450.0" prefHeight="15.0" prefWidth="105.0" text="Telefono:">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="130.0" layoutY="445.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
+                              <TextField fx:id="CampoTelefono" layoutX="130.0" layoutY="445.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
                               <Label layoutX="20.0" layoutY="405.0" prefHeight="15.0" prefWidth="105.0" text="DNI:">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="130.0" layoutY="400.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
+                              <TextField fx:id="CampoDni" layoutX="130.0" layoutY="400.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
                               <Label layoutX="20.0" layoutY="495.0" prefHeight="18.0" prefWidth="105.0" text="Telefono Aux:">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="130.0" layoutY="490.0" prefHeight="25.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
+                              <TextField fx:id="CampoTelefonoAux" layoutX="130.0" layoutY="490.0" prefHeight="25.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
                               <Label layoutX="335.0" layoutY="360.0" prefWidth="105.0" text=" Obra Social:">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="445.0" layoutY="310.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
+                              <TextField fx:id="CampoDomicilio" layoutX="445.0" layoutY="310.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
                               <Label layoutX="335.0" layoutY="315.0" prefHeight="15.0" prefWidth="105.0" text="Domicilio:">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="445.0" layoutY="355.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
+                              <TextField fx:id="CampoObraSocial" layoutX="445.0" layoutY="355.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
                               <Label alignment="BOTTOM_LEFT" layoutX="335.0" layoutY="405.0" prefHeight="18.0" prefWidth="135.0" text="F.Nacimiento:">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <DatePicker layoutX="445.0" layoutY="400.0" prefWidth="150.0" stylesheets="@../../css/DashboardDesign.css" />
+                              <DatePicker fx:id="CampoFNacimiento" layoutX="445.0" layoutY="400.0" prefWidth="150.0" stylesheets="@../../css/DashboardDesign.css" />
                               <AnchorPane layoutX="735.0" layoutY="310.0" prefHeight="149.0" prefWidth="101.0" stylesheets="@../../css/DashboardDesign.css">
                                  <styleClass>
                                     <String fx:value="white-bg" />
@@ -199,7 +199,7 @@
                               <String fx:value="shadow" />
                            </styleClass>
                         </AnchorPane>
-                        <AnchorPane fx:id="Pagos_Form" layoutX="122.0" layoutY="144.0" prefHeight="555.0" prefWidth="889.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="Pagos_Form" layoutX="122.0" layoutY="144.0" prefHeight="555.0" prefWidth="889.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="7.0" layoutY="8.0" prefHeight="540.0" prefWidth="877.0" stylesheets="@../../css/DashboardDesign.css">
                                  <styleClass>
