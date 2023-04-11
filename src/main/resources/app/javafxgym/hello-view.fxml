@@ -22,26 +22,26 @@
                                 <Font size="18.0" />
                             </font>
                         </TextField>
-                        <Label layoutX="35.0" layoutY="97.0" text="Control de Clientes" textFill="#1b1919">
-                            <font>
-                                <Font name="System Bold" size="36.0" />
-                            </font>
-                        </Label>
-                        <Button fx:id="loginBtn" layoutX="43.0" layoutY="410.0" mnemonicParsing="false" onAction="#loginAdmin" prefHeight="50.0" prefWidth="300.0" styleClass="login-btn" text="Entrar">
-                            <font>
-                                <Font name="System Bold" size="18.0" />
-                            </font>
-                        </Button>
-                        <Button fx:id="close" layoutX="345.0" layoutY="-2.0" mnemonicParsing="false" onAction="#close" prefHeight="28.0" prefWidth="58.0" styleClass="close" stylesheets="@../../css/LoginDesign.css" AnchorPane.rightAnchor="-3.0" AnchorPane.topAnchor="-2.0">
-                            <graphic>
-                                <FontAwesomeIconView glyphName="CLOSE" size="1.2em" textAlignment="CENTER" wrappingWidth="31.428571701049805" />
-                            </graphic>
-                        </Button>
                   <PasswordField fx:id="password" layoutX="43.0" layoutY="288.0" onAction="#loginAdmin" prefHeight="40.0" prefWidth="300.0" promptText="Contraseña">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </PasswordField>
+                        <Button fx:id="loginBtn" layoutX="43.0" layoutY="410.0" mnemonicParsing="false" onAction="#loginAdmin" prefHeight="50.0" prefWidth="300.0" styleClass="login-btn" text="Entrar">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Button>
+                        <Label layoutX="35.0" layoutY="97.0" text="Control de Clientes" textFill="#1b1919">
+                            <font>
+                                <Font name="System Bold" size="36.0" />
+                            </font>
+                        </Label>
+                        <Button fx:id="close" layoutX="345.0" layoutY="-2.0" mnemonicParsing="false" onAction="#close" prefHeight="28.0" prefWidth="58.0" styleClass="close" stylesheets="@../../css/LoginDesign.css" AnchorPane.rightAnchor="-3.0" AnchorPane.topAnchor="-2.0">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="CLOSE" size="1.2em" textAlignment="CENTER" wrappingWidth="31.428571701049805" />
+                            </graphic>
+                        </Button>
                     </children>
                 </AnchorPane>
             <AnchorPane prefHeight="600.0" prefWidth="400.0" styleClass="left-form" stylesheets="@../../css/LoginDesign.css">
