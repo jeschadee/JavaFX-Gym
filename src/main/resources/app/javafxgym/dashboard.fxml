@@ -113,7 +113,7 @@
                                     <String fx:value="shadow" />
                                  </styleClass>
                                  <children>
-                                    <TableView fx:id="TablaPrincipalID" layoutX="7.0" layoutY="45.0" onMouseClicked="#AgregarAlumnoSeleccionado" prefHeight="239.0" prefWidth="864.0">
+                                    <TableView fx:id="TablaPrincipalID" layoutX="7.0" layoutY="45.0" onMouseClicked="#ClickAlumnoSeleccionado" prefHeight="239.0" prefWidth="864.0">
                                       <columns>
                                         <TableColumn fx:id="ClienteIdTabla" prefWidth="42.0" text="ID" />
                                         <TableColumn fx:id="NombreClienteTabla" prefWidth="89.0" text="Nombre" />
@@ -184,10 +184,10 @@
                                     <Button layoutY="123.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="120.0" styleClass="import-btn" stylesheets="@../../css/DashboardDesign.css" text="Añadir imagen" />
                                  </children>
                               </AnchorPane>
-                              <Button layoutX="735.0" layoutY="495.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" styleClass="agregar-btn" stylesheets="@../../css/DashboardDesign.css" text="Agregar" />
-                              <Button layoutX="600.0" layoutY="495.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" styleClass="agregar-btn" stylesheets="@../../css/DashboardDesign.css" text="Actualizar" />
-                              <Button layoutX="470.0" layoutY="495.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" styleClass="agregar-btn" stylesheets="@../../css/DashboardDesign.css" text="Eliminar" />
-                              <Button layoutX="335.0" layoutY="495.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" styleClass="agregar-btn" stylesheets="@../../css/DashboardDesign.css" text="Limpiar" />
+                              <Button fx:id="btn_Agregar" layoutX="735.0" layoutY="495.0" mnemonicParsing="false" onMouseClicked="#AgregarAlumno" prefHeight="35.0" prefWidth="120.0" styleClass="agregar-btn" stylesheets="@../../css/DashboardDesign.css" text="Agregar" />
+                              <Button fx:id="btn_Actualizar" layoutX="600.0" layoutY="495.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" styleClass="agregar-btn" stylesheets="@../../css/DashboardDesign.css" text="Actualizar" />
+                              <Button fx:id="btn_Eliminar" layoutX="470.0" layoutY="495.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" styleClass="agregar-btn" stylesheets="@../../css/DashboardDesign.css" text="Eliminar" />
+                              <Button fx:id="btn_Limpiar" layoutX="335.0" layoutY="495.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" styleClass="agregar-btn" stylesheets="@../../css/DashboardDesign.css" text="Limpiar" />
                               <Label layoutX="20.0" layoutY="315.0" prefHeight="15.0" prefWidth="105.0" text="Nombre:">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />

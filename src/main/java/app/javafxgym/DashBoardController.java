@@ -169,6 +169,18 @@ public class DashBoardController implements Initializable {
     @FXML
     private TextField CampoTelefonoAux;
 
+    @FXML
+    private Button btn_Actualizar;
+
+    @FXML
+    private Button btn_Agregar;
+
+    @FXML
+    private Button btn_Eliminar;
+
+    @FXML
+    private Button btn_Limpiar;
+
     public void Cerrar(){
         System.exit(0);
     }
@@ -238,7 +250,7 @@ public class DashBoardController implements Initializable {
         return ListaClientes;
     }
 
-    public void AgregarAlumnoSeleccionado(){
+    public void ClickAlumnoSeleccionado(){
         ClienteGym cliente = TablaPrincipalID.getSelectionModel().getSelectedItem();
         int num = TablaPrincipalID.getSelectionModel().getSelectedIndex();
 
@@ -256,6 +268,51 @@ public class DashBoardController implements Initializable {
         CampoObraSocial.setText(cliente.getObraSocial());
     }
 
+    public void AgregarAlumno() {
+        String sql = "INSERT INTO `clientes`(`Nombre`, `Apellido`, `Dni`, `Telefono`, `TelefonoAux`, `ObraSocial`, `Domicilio`, `FechaNacimiento`) VALUES" +
+                     "(?,?,?,?,?,?,?,?)";
+
+        connect = database.connectdb();
+
+        try{
+            Alert alert;
+            if(CampoNombre.getText().isEmpty() || CampoApellido.getText().isEmpty() || CampoDni.getText().isEmpty() ||
+               CampoDomicilio.getText().isEmpty() || CampoTelefono.getText().isEmpty() || CampoFNacimiento.getChronology().toString() == "" ||
+               CampoTelefonoAux.getText().isEmpty() || CampoObraSocial.getText().isEmpty()
+            ){
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Por favor rellene todos los campos");
+                alert.showAndWait();
+                return;
+            }
+            else{
+                prepare =  connect.prepareStatement(sql);
+                prepare.setString(1,CampoNombre.getText());
+                prepare.setString(2,CampoApellido.getText());
+                prepare.setString(3,CampoDni.getText());
+                prepare.setString(4,CampoTelefono.getText());
+                prepare.setString(5,CampoTelefonoAux.getText());
+                prepare.setString(6,CampoObraSocial.getText());
+                prepare.setString(7,CampoDomicilio.getText());
+                prepare.setString(8,CampoFNacimiento.getValue().toString());
+                prepare.executeUpdate();
+
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Correcto.");
+                alert.setHeaderText(null);
+                alert.setContentText("¡Cliente añadido!");
+                alert.showAndWait();
+
+                MostrarClientes();
+            }
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
     public void MostrarClientes()
     {
         ListaClientes = ClientesDesdeDB();
@@ -271,6 +328,16 @@ public class DashBoardController implements Initializable {
         FechaNacimientoClienteTabla.setCellValueFactory(new PropertyValueFactory<>("FechaNacimiento"));
         EdadClienteTabla.setCellValueFactory(new PropertyValueFactory<>("Edad"));
         TablaPrincipalID.setItems(ListaClientes);
+
+        CampoNombre.setText("");
+        CampoApellido.setText("");
+        CampoDni.setText("");
+        CampoDomicilio.setText("");
+        CampoTelefono.setText("");
+        CampoFNacimiento.setValue(null);
+        CampoTelefonoAux.setText("");
+        CampoObraSocial.setText("");
+
     }
 
     public void CerrarSession(){
