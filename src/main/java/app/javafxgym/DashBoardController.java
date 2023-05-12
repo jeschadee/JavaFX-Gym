@@ -2,6 +2,8 @@ package app.javafxgym;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -57,6 +59,8 @@ public class DashBoardController implements Initializable {
 
     @FXML
     private Button Inicio_btn;
+    @FXML
+    private TextField FiltroCliente;
 
     @FXML
     private TextField Modificar_Apellido;
@@ -299,14 +303,167 @@ public class DashBoardController implements Initializable {
                 prepare.setString(8,CampoFNacimiento.getValue().toString());
                 prepare.executeUpdate();
 
+                MostrarClientes();
                 alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Correcto.");
                 alert.setHeaderText(null);
                 alert.setContentText("¡Cliente añadido!");
                 alert.showAndWait();
-
-                MostrarClientes();
             }
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    public void ActualizarAlumno() {
+        Alert alert;
+        ClienteGym cliente = TablaPrincipalID.getSelectionModel().getSelectedItem();
+        int num = TablaPrincipalID.getSelectionModel().getSelectedIndex();
+
+        if ((num - 1) < -1) {
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("¡Debe seleccionar un usuario para actualizar!");
+            alert.showAndWait();
+            return;
+        }
+
+        String sql = "Update `clientes`set`Nombre`=?, `Apellido`=?, `Dni`=?, `Telefono`=?, `TelefonoAux`=?, `ObraSocial`=?, `Domicilio`=?, `FechaNacimiento`=? WHERE" +
+                " Id = ? ";
+
+        connect = database.connectdb();
+
+        try{
+            if(CampoNombre.getText().isEmpty() || CampoApellido.getText().isEmpty() || CampoDni.getText().isEmpty() ||
+                    CampoDomicilio.getText().isEmpty() || CampoTelefono.getText().isEmpty() || CampoFNacimiento.getChronology().toString() == "" ||
+                    CampoTelefonoAux.getText().isEmpty() || CampoObraSocial.getText().isEmpty()
+            ){
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Todos los campos deben estar llenos");
+                alert.showAndWait();
+                return;
+            }
+            else{
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmar");
+                alert.setHeaderText(null);
+                alert.setContentText("¿Esta seguro de actualizar al usuario: "+ cliente.getApellido()+"?");
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if(option.get().equals(ButtonType.OK)) {
+
+                    prepare = connect.prepareStatement(sql);
+                    prepare.setString(1, CampoNombre.getText());
+                    prepare.setString(2, CampoApellido.getText());
+                    prepare.setString(3, CampoDni.getText());
+                    prepare.setString(4, CampoTelefono.getText());
+                    prepare.setString(5, CampoTelefonoAux.getText());
+                    prepare.setString(6, CampoObraSocial.getText());
+                    prepare.setString(7, CampoDomicilio.getText());
+                    prepare.setString(8, CampoFNacimiento.getValue().toString());
+                    prepare.setString(9, cliente.getId().toString());
+                    prepare.executeUpdate();
+
+                    MostrarClientes();
+
+                    alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Correcto.");
+                    alert.setHeaderText(null);
+                    alert.setContentText("¡Cliente Actualizado!");
+                    alert.showAndWait();
+                }
+                else{
+                    return;
+                }
+
+            }
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    public void FiltroAlumno(){
+        FilteredList<ClienteGym> filtro = new FilteredList<>(ListaClientes, e->true );
+        FiltroCliente.textProperty().addListener((Observable,oldValue,NewValue)->{
+          filtro.setPredicate(predicateClienteData->{
+              if(NewValue == null || NewValue.isEmpty())
+              return true;
+
+              String palabraBuscar = NewValue.toLowerCase();
+
+              if(predicateClienteData.getId().toString().contains(palabraBuscar))
+                  return true;
+              else if (predicateClienteData.getApellido().toLowerCase().contains(palabraBuscar)) {
+                  return true;
+              }
+              else if (predicateClienteData.getNombre().toLowerCase().contains(palabraBuscar)) {
+                  return true;
+              }
+              else if (predicateClienteData.getDomicilio().toLowerCase().contains(palabraBuscar)) {
+                  return true;
+              }
+              else if (predicateClienteData.getDni().toString().contains(palabraBuscar)) {
+                  return true;
+              }
+              else if (predicateClienteData.getEdad().toString().contains(palabraBuscar)) {
+                  return true;
+              }
+              else if (predicateClienteData.getObraSocial().toLowerCase().contains(palabraBuscar)) {
+                  return true;
+              }
+              else if (predicateClienteData.getFechaNacimiento().toString().contains(palabraBuscar)) {
+                  return true;
+              }
+              else if (predicateClienteData.getTelefono().toString().contains(palabraBuscar)) {
+                  return true;
+              }
+              else if (predicateClienteData.getTelefonoAux().toString().contains(palabraBuscar)) {
+                  return true;
+              }
+              else return  false;
+          });
+        });
+
+        SortedList<ClienteGym> listaFiltrada = new SortedList<>(filtro);
+        listaFiltrada.comparatorProperty().bind(TablaPrincipalID.comparatorProperty());
+        TablaPrincipalID.setItems(listaFiltrada);
+    }
+    public void EliminarAlumno() {
+        Alert alert;
+        ClienteGym cliente = TablaPrincipalID.getSelectionModel().getSelectedItem();
+        int num = TablaPrincipalID.getSelectionModel().getSelectedIndex();
+
+        if ((num - 1) < -1) {
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("¡Debe seleccionar un usuario para poder eliminar!");
+            alert.showAndWait();
+            return;
+        }
+
+        String sql = "DELETE FROM `clientes` WHERE" +
+                " Id = ? ";
+
+        connect = database.connectdb();
+
+        try{
+            prepare =  connect.prepareStatement(sql);
+            prepare.setString(1,cliente.getId().toString());
+            prepare.executeUpdate();
+
+            MostrarClientes();
+
+            alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Correcto.");
+            alert.setHeaderText(null);
+            alert.setContentText("Cliente "+ cliente.getApellido().toString() +" Eliminado...");
+            alert.showAndWait();
         }
         catch (Exception ex){
             ex.printStackTrace();
@@ -316,7 +473,6 @@ public class DashBoardController implements Initializable {
     public void MostrarClientes()
     {
         ListaClientes = ClientesDesdeDB();
-
         ClienteIdTabla.setCellValueFactory(new PropertyValueFactory<>("Id"));
         NombreClienteTabla.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
         ApellidoClienteTabla.setCellValueFactory(new PropertyValueFactory<>("Apellido"));
@@ -329,6 +485,11 @@ public class DashBoardController implements Initializable {
         EdadClienteTabla.setCellValueFactory(new PropertyValueFactory<>("Edad"));
         TablaPrincipalID.setItems(ListaClientes);
 
+        LimpiarCampos();
+
+    }
+
+    public void LimpiarCampos(){
         CampoNombre.setText("");
         CampoApellido.setText("");
         CampoDni.setText("");
@@ -337,7 +498,7 @@ public class DashBoardController implements Initializable {
         CampoFNacimiento.setValue(null);
         CampoTelefonoAux.setText("");
         CampoObraSocial.setText("");
-
+        FiltroCliente.setText("");
     }
 
     public void CerrarSession(){
@@ -384,5 +545,6 @@ public class DashBoardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         MostrarClientes();
+        FiltroAlumno();
     }
 }

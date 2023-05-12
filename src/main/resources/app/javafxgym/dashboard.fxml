@@ -127,7 +127,7 @@
                                           <TableColumn fx:id="EdadClienteTabla" prefWidth="54.0" text="Edad" />
                                       </columns>
                                     </TableView>
-                                    <TextField layoutX="8.0" layoutY="9.0" prefHeight="30.0" prefWidth="269.0" promptText="      Buscar" styleClass="search" stylesheets="@../../css/DashboardDesign.css" />
+                                    <TextField fx:id="FiltroCliente" layoutX="8.0" layoutY="9.0" prefHeight="30.0" prefWidth="269.0" promptText="      Buscar" styleClass="search" stylesheets="@../../css/DashboardDesign.css" />
                                     <FontAwesomeIconView glyphName="SEARCH" layoutX="14.0" layoutY="30.0" size="1.5em" />
                                  </children>
                               </AnchorPane>
@@ -138,31 +138,31 @@
                                  </font>
                               </Label>
                               <TextField fx:id="CampoApellido" layoutX="130.0" layoutY="355.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
-                              <Label layoutX="20.0" layoutY="450.0" prefHeight="15.0" prefWidth="105.0" text="Telefono:">
-                                 <font>
-                                    <Font name="Tahoma Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="CampoTelefono" layoutX="130.0" layoutY="445.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
                               <Label layoutX="20.0" layoutY="405.0" prefHeight="15.0" prefWidth="105.0" text="DNI:">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
                               </Label>
                               <TextField fx:id="CampoDni" layoutX="130.0" layoutY="400.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
+                              <Label layoutX="20.0" layoutY="450.0" prefHeight="15.0" prefWidth="105.0" text="Telefono:">
+                                 <font>
+                                    <Font name="Tahoma Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="CampoTelefono" layoutX="130.0" layoutY="445.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
                               <Label layoutX="20.0" layoutY="495.0" prefHeight="18.0" prefWidth="105.0" text="Telefono Aux:">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
                               </Label>
                               <TextField fx:id="CampoTelefonoAux" layoutX="130.0" layoutY="490.0" prefHeight="25.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
-                              <Label layoutX="335.0" layoutY="360.0" prefWidth="105.0" text=" Obra Social:">
+                              <Label layoutX="335.0" layoutY="315.0" prefHeight="15.0" prefWidth="105.0" text="Domicilio:">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
                               </Label>
                               <TextField fx:id="CampoDomicilio" layoutX="445.0" layoutY="310.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
-                              <Label layoutX="335.0" layoutY="315.0" prefHeight="15.0" prefWidth="105.0" text="Domicilio:">
+                              <Label layoutX="335.0" layoutY="360.0" prefWidth="105.0" text=" Obra Social:">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
@@ -185,9 +185,9 @@
                                  </children>
                               </AnchorPane>
                               <Button fx:id="btn_Agregar" layoutX="735.0" layoutY="495.0" mnemonicParsing="false" onMouseClicked="#AgregarAlumno" prefHeight="35.0" prefWidth="120.0" styleClass="agregar-btn" stylesheets="@../../css/DashboardDesign.css" text="Agregar" />
-                              <Button fx:id="btn_Actualizar" layoutX="600.0" layoutY="495.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" styleClass="agregar-btn" stylesheets="@../../css/DashboardDesign.css" text="Actualizar" />
-                              <Button fx:id="btn_Eliminar" layoutX="470.0" layoutY="495.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" styleClass="agregar-btn" stylesheets="@../../css/DashboardDesign.css" text="Eliminar" />
-                              <Button fx:id="btn_Limpiar" layoutX="335.0" layoutY="495.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" styleClass="agregar-btn" stylesheets="@../../css/DashboardDesign.css" text="Limpiar" />
+                              <Button fx:id="btn_Actualizar" layoutX="600.0" layoutY="495.0" mnemonicParsing="false" onAction="#ActualizarAlumno" prefHeight="35.0" prefWidth="120.0" styleClass="agregar-btn" stylesheets="@../../css/DashboardDesign.css" text="Actualizar" />
+                              <Button fx:id="btn_Eliminar" layoutX="470.0" layoutY="495.0" mnemonicParsing="false" onAction="#EliminarAlumno" prefHeight="35.0" prefWidth="120.0" styleClass="agregar-btn" stylesheets="@../../css/DashboardDesign.css" text="Eliminar" />
+                              <Button fx:id="btn_Limpiar" layoutX="335.0" layoutY="495.0" mnemonicParsing="false" onAction="#LimpiarCampos" prefHeight="35.0" prefWidth="120.0" styleClass="agregar-btn" stylesheets="@../../css/DashboardDesign.css" text="Limpiar" />
                               <Label layoutX="20.0" layoutY="315.0" prefHeight="15.0" prefWidth="105.0" text="Nombre:">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />
