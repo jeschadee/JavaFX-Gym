@@ -32,10 +32,10 @@ import static javafx.collections.FXCollections.observableArrayList;
 public class DashBoardController implements Initializable {
 
     @FXML
-    private AnchorPane Anadir_Form;
+    private AnchorPane Balance_Form;
 
     @FXML
-    private Button Anadir_btn;
+    private Button Balance_btn;
 
     @FXML
     private TableColumn<ClienteGym, Integer> ClienteIdTabla;
@@ -182,6 +182,24 @@ public class DashBoardController implements Initializable {
     @FXML
     private Button btn_Limpiar;
 
+    @FXML
+    private TableView<PagosGym> PagoTabla;
+
+    @FXML
+    private TableColumn<PagosGym, Integer> PagoTablaCantidad;
+
+    @FXML
+    private TableColumn<PagosGym, Date> PagoTablaFecha;
+
+    @FXML
+    private TableColumn<PagosGym, Integer> PagoTablaId;
+
+    @FXML
+    private TableColumn<PagosGym, String> PagoTablaNombre;
+
+    @FXML
+    private TableColumn<PagosGym, String> PagoTablaPago;
+
     public void Cerrar(){
         System.exit(0);
     }
@@ -197,23 +215,59 @@ public class DashBoardController implements Initializable {
     private Statement statement;
     private PreparedStatement prepare;
     private ResultSet resultado;
-    private ObservableList<ClienteGym> ListaClientes;
-
+    private ObservableList<ClienteGym> listaClientes;
+    private ObservableList<PagosGym> listaPagos;
     public void CambiarForm(ActionEvent event) {
+        Inicio_Form.setVisible(false);
+        Pagos_Form.setVisible(false);
+        Balance_Form.setVisible(false);
         if (event.getSource() == Inicio_btn) {
             Inicio_Form.setVisible(true);
-            Pagos_Form.setVisible(false);
-            Anadir_Form.setVisible(false);
         } else if (event.getSource() == Pagos_btn) {
             Pagos_Form.setVisible(true);
-            Inicio_Form.setVisible(false);
-            Anadir_Form.setVisible(false);
         }
-        else if(event.getSource() == Anadir_btn) {
-            Anadir_Form.setVisible(true);
-            Inicio_Form.setVisible(false);
-            Pagos_Form.setVisible(false);
+        else if(event.getSource() == Balance_btn) {
+            Balance_Form.setVisible(true);
         }
+    }
+
+    public ObservableList<PagosGym> PagosDesdeDB() {
+        ObservableList<PagosGym> ListaPagos = observableArrayList();
+        String sql = "select c.IdUsuario ,c.ApeYNom, " +
+                    "p.Cantidad, " +
+                    "p.FechaPago, " +
+                    "case when p.FechaPago is NOT null and DATE_ADD(p.FechaPago, INTERVAL 1 MONTH) >= CURDATE() " +
+                    "then 1 " +
+                    "else 0 " +
+                    "end as yaPago, " +
+                    "case when p.FechaPago is NOT null then DATEDIFF(DATE_ADD(p.FechaPago, INTERVAL 1 MONTH),CURDATE()) else 0 end AS DiasRestantes " +
+                    "from clientes c " +
+                    "left join pagos p on c.IdUsuario = p.IdUsuario";
+
+        connect = database.connectdb();
+        try{
+            prepare =  connect.prepareStatement(sql);
+            resultado = prepare.executeQuery();
+            PagosGym pagosGym;
+            while(resultado.next())
+            {
+                pagosGym = new PagosGym(
+                        resultado.getInt("IdUsuario"),
+                        resultado.getString("ApeYNom"),
+                        resultado.getInt("Cantidad"),
+                        resultado.getDate("FechaPago"),
+                        resultado.getBoolean("YaPago"),
+                        resultado.getInt("DiasRestantes")
+                );
+
+                ListaPagos.add(pagosGym);
+            }
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        return ListaPagos;
     }
 
     public ObservableList<ClienteGym> ClientesDesdeDB(){
@@ -384,7 +438,7 @@ public class DashBoardController implements Initializable {
     }
 
     public void FiltroAlumno(){
-        FilteredList<ClienteGym> filtro = new FilteredList<>(ListaClientes, e->true );
+        FilteredList<ClienteGym> filtro = new FilteredList<>(listaClientes, e->true );
         FiltroCliente.textProperty().addListener((Observable,oldValue,NewValue)->{
           filtro.setPredicate(predicateClienteData->{
               if(NewValue == null || NewValue.isEmpty())
@@ -462,8 +516,8 @@ public class DashBoardController implements Initializable {
 
     public void MostrarClientes()
     {
-        ListaClientes = ClientesDesdeDB();
-        ClienteIdTabla.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        listaClientes = ClientesDesdeDB();
+        ClienteIdTabla.setCellValueFactory(new PropertyValueFactory<>("IdUsuario"));
         NombreClienteTabla.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
         DniClienteTabla.setCellValueFactory(new PropertyValueFactory<>("Dni"));
         TelefonoClienteTabla.setCellValueFactory(new PropertyValueFactory<>("Telefono"));
@@ -473,12 +527,22 @@ public class DashBoardController implements Initializable {
         FechaNacimientoClienteTabla.setCellValueFactory(new PropertyValueFactory<>("FechaNacimiento"));
         PagoClienteTabla.setCellValueFactory(new PropertyValueFactory<>("YaPago"));
         FechaPagoClienteTabla.setCellValueFactory(new PropertyValueFactory<>("FechaPago"));
-        TablaPrincipalID.setItems(ListaClientes);
+        TablaPrincipalID.setItems(listaClientes);
 
         LimpiarCampos();
 
     }
 
+    public void MostrarPagos()
+    {
+        listaPagos = PagosDesdeDB();
+        PagoTablaId.setCellValueFactory(new PropertyValueFactory<>("IdUsuario"));
+        PagoTablaNombre.setCellValueFactory(new PropertyValueFactory<>("ApeYNom"));
+        PagoTablaCantidad.setCellValueFactory(new PropertyValueFactory<>("Cantidad"));
+        PagoTablaPago.setCellValueFactory(new PropertyValueFactory<>("YaPago"));
+        PagoTablaFecha.setCellValueFactory(new PropertyValueFactory<>("FechaPago"));
+        PagoTabla.setItems(listaPagos);
+    }
     public void LimpiarCampos(){
         CampoNombre.setText("");
         CampoDni.setText("");
@@ -531,9 +595,18 @@ public class DashBoardController implements Initializable {
 
 
     }
+    public void InicializarGrillas(){
+        Inicio_Form.setVisible(true);
+        Pagos_Form.setVisible(true);
+        Balance_Form.setVisible(true);
+        Pagos_Form.setVisible(false);
+        Balance_Form.setVisible(false);
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        InicializarGrillas();
         MostrarClientes();
+        MostrarPagos();
         FiltroAlumno();
     }
 }
