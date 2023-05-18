@@ -115,65 +115,59 @@
                                  <children>
                                     <TableView fx:id="TablaPrincipalID" layoutX="7.0" layoutY="45.0" onMouseClicked="#ClickAlumnoSeleccionado" prefHeight="239.0" prefWidth="864.0">
                                       <columns>
-                                        <TableColumn fx:id="ClienteIdTabla" prefWidth="42.0" text="ID" />
-                                        <TableColumn fx:id="NombreClienteTabla" prefWidth="89.0" text="Nombre" />
-                                          <TableColumn fx:id="ApellidoClienteTabla" prefWidth="77.0" text="Apellido" />
+                                        <TableColumn fx:id="ClienteIdTabla" prefWidth="50.0" text="ID" />
+                                        <TableColumn fx:id="NombreClienteTabla" prefWidth="130.0" text="Nombre Completo" />
                                           <TableColumn fx:id="DniClienteTabla" text="DNI" />
-                                          <TableColumn fx:id="TelefonoClienteTabla" prefWidth="87.0" text="Telefono" />
-                                          <TableColumn fx:id="TelefonoAuxClienteTabla" prefWidth="99.0" text="Telefono Aux" />
-                                          <TableColumn fx:id="ObraSocialClienteTabla" prefWidth="99.0" text="Obra Social" />
-                                          <TableColumn fx:id="DomicilioClienteTabla" prefWidth="122.0" text="Domicilio" />
-                                          <TableColumn fx:id="FechaNacimientoClienteTabla" prefWidth="114.0" text="Fecha Nacimiento" />
-                                          <TableColumn fx:id="EdadClienteTabla" prefWidth="54.0" text="Edad" />
+                                          <TableColumn fx:id="TelefonoClienteTabla" prefWidth="70.0" text="Telefono" />
+                                          <TableColumn fx:id="TelefonoAuxClienteTabla" prefWidth="70.0" text="Telefono 2" />
+                                          <TableColumn fx:id="ObraSocialClienteTabla" prefWidth="150.0" text="Obra Social" />
+                                          <TableColumn fx:id="DomicilioClienteTabla" prefWidth="140.0" text="Domicilio" />
+                                          <TableColumn fx:id="FechaNacimientoClienteTabla" prefWidth="70.0" text="Fecha N." />
+                                          <TableColumn fx:id="PagoClienteTabla" minWidth="9.0" prefWidth="40.0" text="Pagó" />
+                                          <TableColumn fx:id="FechaPagoClienteTabla" prefWidth="70.0" text="Fecha Pago" />
                                       </columns>
                                     </TableView>
                                     <TextField fx:id="FiltroCliente" layoutX="8.0" layoutY="9.0" prefHeight="30.0" prefWidth="269.0" promptText="      Buscar" styleClass="search" stylesheets="@../../css/DashboardDesign.css" />
                                     <FontAwesomeIconView glyphName="SEARCH" layoutX="14.0" layoutY="30.0" size="1.5em" />
                                  </children>
                               </AnchorPane>
-                              <TextField fx:id="CampoNombre" layoutX="130.0" layoutY="310.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
-                              <Label layoutX="20.0" layoutY="360.0" prefHeight="15.0" prefWidth="105.0" text="Apellido:">
+                              <TextField fx:id="CampoNombre" layoutX="165.0" layoutY="310.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
+                              <Label layoutX="25.0" layoutY="360.0" prefHeight="15.0" prefWidth="105.0" text="DNI:">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="CampoApellido" layoutX="130.0" layoutY="355.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
-                              <Label layoutX="20.0" layoutY="405.0" prefHeight="15.0" prefWidth="105.0" text="DNI:">
+                              <TextField fx:id="CampoDni" layoutX="165.0" layoutY="355.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
+                              <Label layoutX="25.0" layoutY="406.0" prefHeight="15.0" prefWidth="105.0" text="Telefono:">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="CampoDni" layoutX="130.0" layoutY="400.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
-                              <Label layoutX="20.0" layoutY="450.0" prefHeight="15.0" prefWidth="105.0" text="Telefono:">
+                              <TextField fx:id="CampoTelefono" layoutX="165.0" layoutY="400.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
+                              <Label layoutX="25.0" layoutY="451.0" prefHeight="18.0" prefWidth="105.0" text="Telefono Aux:">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="CampoTelefono" layoutX="130.0" layoutY="445.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
-                              <Label layoutX="20.0" layoutY="495.0" prefHeight="18.0" prefWidth="105.0" text="Telefono Aux:">
+                              <TextField fx:id="CampoTelefonoAux" layoutX="165.0" layoutY="445.0" prefHeight="25.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
+                              <Label layoutX="25.0" layoutY="495.0" prefHeight="15.0" prefWidth="105.0" text="Domicilio:">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="CampoTelefonoAux" layoutX="130.0" layoutY="490.0" prefHeight="25.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
-                              <Label layoutX="335.0" layoutY="315.0" prefHeight="15.0" prefWidth="105.0" text="Domicilio:">
+                              <TextField fx:id="CampoDomicilio" layoutX="165.0" layoutY="490.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
+                              <Label layoutX="350.0" layoutY="315.0" prefWidth="105.0" text=" Obra Social:">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="CampoDomicilio" layoutX="445.0" layoutY="310.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
-                              <Label layoutX="335.0" layoutY="360.0" prefWidth="105.0" text=" Obra Social:">
+                              <TextField fx:id="CampoObraSocial" layoutX="460.0" layoutY="310.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
+                              <Label alignment="BOTTOM_LEFT" layoutX="350.0" layoutY="360.0" prefHeight="18.0" prefWidth="135.0" text="F.Nacimiento:">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="CampoObraSocial" layoutX="445.0" layoutY="355.0" prefWidth="150.0" styleClass="textfield" stylesheets="@../../css/DashboardDesign.css" />
-                              <Label alignment="BOTTOM_LEFT" layoutX="335.0" layoutY="405.0" prefHeight="18.0" prefWidth="135.0" text="F.Nacimiento:">
-                                 <font>
-                                    <Font name="Tahoma Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <DatePicker fx:id="CampoFNacimiento" layoutX="445.0" layoutY="400.0" prefWidth="150.0" stylesheets="@../../css/DashboardDesign.css" />
+                              <DatePicker fx:id="CampoFNacimiento" layoutX="460.0" layoutY="355.0" prefWidth="150.0" stylesheets="@../../css/DashboardDesign.css" />
                               <AnchorPane layoutX="735.0" layoutY="310.0" prefHeight="149.0" prefWidth="101.0" stylesheets="@../../css/DashboardDesign.css">
                                  <styleClass>
                                     <String fx:value="white-bg" />
@@ -184,11 +178,11 @@
                                     <Button layoutY="123.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="120.0" styleClass="import-btn" stylesheets="@../../css/DashboardDesign.css" text="Añadir imagen" />
                                  </children>
                               </AnchorPane>
-                              <Button fx:id="btn_Agregar" layoutX="735.0" layoutY="495.0" mnemonicParsing="false" onMouseClicked="#AgregarAlumno" prefHeight="35.0" prefWidth="120.0" styleClass="agregar-btn" stylesheets="@../../css/DashboardDesign.css" text="Agregar" />
-                              <Button fx:id="btn_Actualizar" layoutX="600.0" layoutY="495.0" mnemonicParsing="false" onAction="#ActualizarAlumno" prefHeight="35.0" prefWidth="120.0" styleClass="agregar-btn" stylesheets="@../../css/DashboardDesign.css" text="Actualizar" />
-                              <Button fx:id="btn_Eliminar" layoutX="470.0" layoutY="495.0" mnemonicParsing="false" onAction="#EliminarAlumno" prefHeight="35.0" prefWidth="120.0" styleClass="agregar-btn" stylesheets="@../../css/DashboardDesign.css" text="Eliminar" />
-                              <Button fx:id="btn_Limpiar" layoutX="335.0" layoutY="495.0" mnemonicParsing="false" onAction="#LimpiarCampos" prefHeight="35.0" prefWidth="120.0" styleClass="agregar-btn" stylesheets="@../../css/DashboardDesign.css" text="Limpiar" />
-                              <Label layoutX="20.0" layoutY="315.0" prefHeight="15.0" prefWidth="105.0" text="Nombre:">
+                              <Button fx:id="btn_Agregar" layoutX="750.0" layoutY="490.0" mnemonicParsing="false" onMouseClicked="#AgregarAlumno" prefHeight="35.0" prefWidth="120.0" styleClass="agregar-btn" stylesheets="@../../css/DashboardDesign.css" text="Agregar" />
+                              <Button fx:id="btn_Actualizar" layoutX="620.0" layoutY="490.0" mnemonicParsing="false" onAction="#ActualizarAlumno" prefHeight="35.0" prefWidth="120.0" styleClass="agregar-btn" stylesheets="@../../css/DashboardDesign.css" text="Actualizar" />
+                              <Button fx:id="btn_Eliminar" layoutX="490.0" layoutY="490.0" mnemonicParsing="false" onAction="#EliminarAlumno" prefHeight="35.0" prefWidth="120.0" styleClass="agregar-btn" stylesheets="@../../css/DashboardDesign.css" text="Eliminar" />
+                              <Button fx:id="btn_Limpiar" layoutX="360.0" layoutY="490.0" mnemonicParsing="false" onAction="#LimpiarCampos" prefHeight="35.0" prefWidth="120.0" styleClass="agregar-btn" stylesheets="@../../css/DashboardDesign.css" text="Limpiar" />
+                              <Label layoutX="20.0" layoutY="315.0" prefHeight="18.0" prefWidth="134.0" text="Nombre Completo:">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>

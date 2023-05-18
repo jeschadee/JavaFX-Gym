@@ -22,6 +22,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -37,9 +38,6 @@ public class DashBoardController implements Initializable {
     private Button Anadir_btn;
 
     @FXML
-    private TableColumn<ClienteGym, String> ApellidoClienteTabla;
-
-    @FXML
     private TableColumn<ClienteGym, Integer> ClienteIdTabla;
 
     @FXML
@@ -47,9 +45,6 @@ public class DashBoardController implements Initializable {
 
     @FXML
     private TableColumn<ClienteGym, String> DomicilioClienteTabla;
-
-    @FXML
-    private TableColumn<?, Integer> EdadClienteTabla;
 
     @FXML
     private TableColumn<ClienteGym, Date> FechaNacimientoClienteTabla;
@@ -129,6 +124,12 @@ public class DashBoardController implements Initializable {
     private TableColumn<ClienteGym, String> ObraSocialClienteTabla;
 
     @FXML
+    private TableColumn<ClienteGym, Date> FechaPagoClienteTabla;
+
+    @FXML
+    private TableColumn<ClienteGym, String> PagoClienteTabla;
+
+    @FXML
     private AnchorPane Pagos_Form;
 
     @FXML
@@ -148,10 +149,6 @@ public class DashBoardController implements Initializable {
 
     @FXML
     private AnchorPane Ventana_Principal;
-
-    @FXML
-    private TextField CampoApellido;
-
     @FXML
     private TextField CampoDni;
 
@@ -221,7 +218,9 @@ public class DashBoardController implements Initializable {
 
     public ObservableList<ClienteGym> ClientesDesdeDB(){
         ObservableList<ClienteGym> ListaClientes = observableArrayList();
-        String sql = "SELECT C.*, TIMESTAMPDIFF(YEAR,c.FechaNacimiento,CURRENT_DATE()) as Edad  FROM clientes C";
+        String sql = "SELECT c.*, p.FechaPago " +
+                     "FROM clientes c " +
+                     "LEFT JOIN pagos p on p.IdUsuario = c.IdUsuario";
 
         connect = database.connectdb();
 
@@ -232,16 +231,16 @@ public class DashBoardController implements Initializable {
             while(resultado.next())
             {
                 cliente = new ClienteGym(
-                        resultado.getInt("Id"),
-                        resultado.getString("Nombre"),
-                        resultado.getString("Apellido"),
+                        resultado.getInt("IdUsuario"),
+                        resultado.getString("ApeYNom"),
                         resultado.getLong("Dni"),
                         resultado.getLong("Telefono"),
                         resultado.getLong("TelefonoAux"),
                         resultado.getString("ObraSocial"),
                         resultado.getString("Domicilio"),
                         resultado.getDate("FechaNacimiento"),
-                        resultado.getInt("Edad")
+                        resultado.getBoolean("YaPago"),
+                        resultado.getDate("FechaPago")
                         );
 
                 ListaClientes.add(cliente);
@@ -263,7 +262,6 @@ public class DashBoardController implements Initializable {
         }
 
         CampoNombre.setText(cliente.getNombre());
-        CampoApellido.setText(cliente.getApellido());
         CampoDni.setText(cliente.getDni().toString());
         CampoDomicilio.setText(cliente.getDomicilio());
         CampoTelefono.setText(cliente.getTelefono().toString());
@@ -280,7 +278,7 @@ public class DashBoardController implements Initializable {
 
         try{
             Alert alert;
-            if(CampoNombre.getText().isEmpty() || CampoApellido.getText().isEmpty() || CampoDni.getText().isEmpty() ||
+            if(CampoNombre.getText().isEmpty() || CampoDni.getText().isEmpty() ||
                CampoDomicilio.getText().isEmpty() || CampoTelefono.getText().isEmpty() || CampoFNacimiento.getChronology().toString() == "" ||
                CampoTelefonoAux.getText().isEmpty() || CampoObraSocial.getText().isEmpty()
             ){
@@ -294,7 +292,6 @@ public class DashBoardController implements Initializable {
             else{
                 prepare =  connect.prepareStatement(sql);
                 prepare.setString(1,CampoNombre.getText());
-                prepare.setString(2,CampoApellido.getText());
                 prepare.setString(3,CampoDni.getText());
                 prepare.setString(4,CampoTelefono.getText());
                 prepare.setString(5,CampoTelefonoAux.getText());
@@ -330,13 +327,13 @@ public class DashBoardController implements Initializable {
             return;
         }
 
-        String sql = "Update `clientes`set`Nombre`=?, `Apellido`=?, `Dni`=?, `Telefono`=?, `TelefonoAux`=?, `ObraSocial`=?, `Domicilio`=?, `FechaNacimiento`=? WHERE" +
-                " Id = ? ";
+        String sql = "Update `clientes`set`ApeYNom`=?, `Dni`=?, `Telefono`=?, `TelefonoAux`=?, `ObraSocial`=?, `Domicilio`=?, `FechaNacimiento`=? WHERE" +
+                " IdUsuario = ? ";
 
         connect = database.connectdb();
 
         try{
-            if(CampoNombre.getText().isEmpty() || CampoApellido.getText().isEmpty() || CampoDni.getText().isEmpty() ||
+            if(CampoNombre.getText().isEmpty() || CampoDni.getText().isEmpty() ||
                     CampoDomicilio.getText().isEmpty() || CampoTelefono.getText().isEmpty() || CampoFNacimiento.getChronology().toString() == "" ||
                     CampoTelefonoAux.getText().isEmpty() || CampoObraSocial.getText().isEmpty()
             ){
@@ -351,21 +348,20 @@ public class DashBoardController implements Initializable {
                 alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Confirmar");
                 alert.setHeaderText(null);
-                alert.setContentText("¿Esta seguro de actualizar al usuario: "+ cliente.getApellido()+"?");
+                alert.setContentText("¿Esta seguro de actualizar al usuario: "+ cliente.getNombre() +"?");
                 Optional<ButtonType> option = alert.showAndWait();
 
                 if(option.get().equals(ButtonType.OK)) {
 
                     prepare = connect.prepareStatement(sql);
                     prepare.setString(1, CampoNombre.getText());
-                    prepare.setString(2, CampoApellido.getText());
-                    prepare.setString(3, CampoDni.getText());
-                    prepare.setString(4, CampoTelefono.getText());
-                    prepare.setString(5, CampoTelefonoAux.getText());
-                    prepare.setString(6, CampoObraSocial.getText());
-                    prepare.setString(7, CampoDomicilio.getText());
-                    prepare.setString(8, CampoFNacimiento.getValue().toString());
-                    prepare.setString(9, cliente.getId().toString());
+                    prepare.setString(2, CampoDni.getText());
+                    prepare.setString(3, CampoTelefono.getText());
+                    prepare.setString(4, CampoTelefonoAux.getText());
+                    prepare.setString(5, CampoObraSocial.getText());
+                    prepare.setString(6, CampoDomicilio.getText());
+                    prepare.setString(7, CampoFNacimiento.getValue().toString());
+                    prepare.setString(8, cliente.getId().toString());
                     prepare.executeUpdate();
 
                     MostrarClientes();
@@ -398,9 +394,6 @@ public class DashBoardController implements Initializable {
 
               if(predicateClienteData.getId().toString().contains(palabraBuscar))
                   return true;
-              else if (predicateClienteData.getApellido().toLowerCase().contains(palabraBuscar)) {
-                  return true;
-              }
               else if (predicateClienteData.getNombre().toLowerCase().contains(palabraBuscar)) {
                   return true;
               }
@@ -408,9 +401,6 @@ public class DashBoardController implements Initializable {
                   return true;
               }
               else if (predicateClienteData.getDni().toString().contains(palabraBuscar)) {
-                  return true;
-              }
-              else if (predicateClienteData.getEdad().toString().contains(palabraBuscar)) {
                   return true;
               }
               else if (predicateClienteData.getObraSocial().toLowerCase().contains(palabraBuscar)) {
@@ -462,7 +452,7 @@ public class DashBoardController implements Initializable {
             alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Correcto.");
             alert.setHeaderText(null);
-            alert.setContentText("Cliente "+ cliente.getApellido().toString() +" Eliminado...");
+            alert.setContentText("Cliente "+ cliente.getNombre().toString() +" Eliminado...");
             alert.showAndWait();
         }
         catch (Exception ex){
@@ -475,14 +465,14 @@ public class DashBoardController implements Initializable {
         ListaClientes = ClientesDesdeDB();
         ClienteIdTabla.setCellValueFactory(new PropertyValueFactory<>("Id"));
         NombreClienteTabla.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
-        ApellidoClienteTabla.setCellValueFactory(new PropertyValueFactory<>("Apellido"));
         DniClienteTabla.setCellValueFactory(new PropertyValueFactory<>("Dni"));
         TelefonoClienteTabla.setCellValueFactory(new PropertyValueFactory<>("Telefono"));
         TelefonoAuxClienteTabla.setCellValueFactory(new PropertyValueFactory<>("TelefonoAux"));
         ObraSocialClienteTabla.setCellValueFactory(new PropertyValueFactory<>("ObraSocial"));
         DomicilioClienteTabla.setCellValueFactory(new PropertyValueFactory<>("Domicilio"));
         FechaNacimientoClienteTabla.setCellValueFactory(new PropertyValueFactory<>("FechaNacimiento"));
-        EdadClienteTabla.setCellValueFactory(new PropertyValueFactory<>("Edad"));
+        PagoClienteTabla.setCellValueFactory(new PropertyValueFactory<>("YaPago"));
+        FechaPagoClienteTabla.setCellValueFactory(new PropertyValueFactory<>("FechaPago"));
         TablaPrincipalID.setItems(ListaClientes);
 
         LimpiarCampos();
@@ -491,7 +481,6 @@ public class DashBoardController implements Initializable {
 
     public void LimpiarCampos(){
         CampoNombre.setText("");
-        CampoApellido.setText("");
         CampoDni.setText("");
         CampoDomicilio.setText("");
         CampoTelefono.setText("");
