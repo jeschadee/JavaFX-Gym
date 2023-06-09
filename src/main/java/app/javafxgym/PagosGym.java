@@ -7,7 +7,7 @@ import java.util.Date;
 public class PagosGym {
     public Integer IdUsuario;
     public String ApeYNom;
-    public int Cantidad;
+    public Integer Cantidad;
     public Date FechaPago;
     public String YaPago;
     public Integer DiasRestantes;
@@ -39,7 +39,7 @@ public class PagosGym {
     public void setApeYNom(String apeYNom) {
         ApeYNom = apeYNom;
     }
-    public int getCantidad() {
+    public Integer getCantidad() {
         return Cantidad;
     }
     public void setCantidad(int cantidad) {
@@ -52,7 +52,12 @@ public class PagosGym {
         return YaPago;
     }
     public LocalDate getFechaPago() {
-        LocalDate localDate = LocalDate.parse( new SimpleDateFormat("yyyy-MM-dd").format(FechaPago));
-        return localDate;
+        if(FechaPago == null){
+            return null;
+        }
+        else{
+            LocalDate localDate = LocalDate.parse( new SimpleDateFormat("yyyy-MM-dd").format(FechaPago));
+            return localDate;
+        }
     }
 }

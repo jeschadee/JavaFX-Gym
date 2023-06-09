@@ -111,7 +111,6 @@ public class HelloController implements Initializable {
                     alert.showAndWait();
 
                 }
-
             }
 
         } catch (Exception e) {

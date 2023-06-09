@@ -107,7 +107,7 @@
                      <children>
                         <AnchorPane fx:id="Inicio_Form" layoutX="6.0" layoutY="7.0" prefHeight="541.0" prefWidth="879.0" stylesheets="@../../css/DashboardDesign.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <AnchorPane layoutX="1.0" prefHeight="293.0" prefWidth="878.0" stylesheets="@../../css/DashboardDesign.css">
+                              <AnchorPane layoutX="5.0" layoutY="10.0" prefHeight="290.0" prefWidth="880.0" stylesheets="@../../css/DashboardDesign.css">
                                  <styleClass>
                                     <String fx:value="white-bg" />
                                     <String fx:value="shadow" />
@@ -193,7 +193,7 @@
                               <String fx:value="shadow" />
                            </styleClass>
                         </AnchorPane>
-                        <AnchorPane fx:id="Pagos_Form" prefHeight="555.0" prefWidth="891.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="Pagos_Form" prefHeight="555.0" prefWidth="891.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="5.0" layoutY="10.0" prefHeight="535.0" prefWidth="330.0" stylesheets="@../../css/DashboardDesign.css">
                                  <styleClass>
@@ -217,20 +217,20 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="Modificar_Apellido" editable="false" layoutX="100.0" layoutY="95.0" prefHeight="25.0" prefWidth="200.0" styleClass="nav-btn" stylesheets="@../../css/DashboardDesign.css" />
                                     <Label layoutX="20.0" layoutY="140.0" text="Cantidad">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="Modificar_Dni" editable="false" layoutX="100.0" layoutY="135.0" prefHeight="25.0" prefWidth="200.0" styleClass="nav-btn" stylesheets="@../../css/DashboardDesign.css" />
+                                    <TextField fx:id="Modificar_Pago" editable="false" layoutX="100.0" layoutY="95.0" prefHeight="25.0" prefWidth="200.0" styleClass="nav-btn" stylesheets="@../../css/DashboardDesign.css" />
+                                    <TextField fx:id="Modificar_Cantidad" editable="false" layoutX="100.0" layoutY="135.0" prefHeight="25.0" prefWidth="200.0" styleClass="nav-btn" stylesheets="@../../css/DashboardDesign.css" />
                                     <Label layoutX="20.0" layoutY="180.0" text="Fecha">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="Modificar_Telefono" editable="false" layoutX="100.0" layoutY="175.0" prefHeight="25.0" prefWidth="200.0" styleClass="nav-btn" stylesheets="@../../css/DashboardDesign.css" />
-                                    <Button fx:id="Modificar_Boton_Modificar" layoutX="200.0" layoutY="470.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="100.0" styleClass="agregar-btn" text="Ingresar Pago" />
+                                    <TextField fx:id="Modificar_Fecha" editable="false" layoutX="100.0" layoutY="175.0" prefHeight="25.0" prefWidth="200.0" styleClass="nav-btn" stylesheets="@../../css/DashboardDesign.css" />
+                                    <Button fx:id="Modificar_Boton_Modificar" layoutX="200.0" layoutY="470.0" mnemonicParsing="false" onMouseClicked="#SetearPago" prefHeight="42.0" prefWidth="100.0" styleClass="agregar-btn" text="Ingresar Pago" />
                                     <Button fx:id="Modificar_Boton_Limpiar" layoutX="100.0" layoutY="470.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="83.0" styleClass="agregar-btn" text="Limpiar" />
                                     <Label fx:id="Modificar_Id" layoutX="127.0" layoutY="15.0" text="Id">
                                        <font>
@@ -254,13 +254,15 @@
                                     <String fx:value="shadow" />
                                  </styleClass>
                                  <children>
-                                    <TableView fx:id="PagoTabla" prefHeight="429.0" prefWidth="407.0" stylesheets="@../../css/DashboardDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <TableView fx:id="PagoTabla" onMouseClicked="#ClickAlumnoSeleccionadoPago" prefHeight="429.0" prefWidth="407.0" stylesheets="@../../css/DashboardDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                       <columns>
-                                        <TableColumn fx:id="PagoTablaId" prefWidth="50.0" text="Id" />
-                                          <TableColumn fx:id="PagoTablaNombre" minWidth="8.0" prefWidth="187.0" text="Nombre" />
-                                          <TableColumn fx:id="PagoTablaPago" prefWidth="56.0" text="Pagó" />
-                                          <TableColumn fx:id="PagoTablaCantidad" prefWidth="109.0" text="Cantidad" />
-                                          <TableColumn fx:id="PagoTablaFecha" prefWidth="131.0" text="Fecha" />
+                                        <TableColumn fx:id="PagoTablaId" prefWidth="40.0" text="Id" />
+                                          <TableColumn fx:id="PagoTablaNombre" minWidth="8.0" prefWidth="130.0" text="Nombre" />
+                                          <TableColumn fx:id="PagoTablaPago" prefWidth="40.0" text="Pagó" />
+                                          <TableColumn fx:id="PagoTablaCantidad" text="Monto" />
+                                          <TableColumn fx:id="PagoTablaFecha" prefWidth="70.0" text="Fecha" />
+                                          <TableColumn fx:id="PagoTablaFecha1" minWidth="0.0" prefWidth="83.0" text="Grupo" />
+                                          <TableColumn fx:id="PagoTablaFecha2" prefWidth="90.0" text="Horario" />
                                       </columns>
                                     </TableView>
                                  </children>

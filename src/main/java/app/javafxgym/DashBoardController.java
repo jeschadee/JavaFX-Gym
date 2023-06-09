@@ -58,7 +58,7 @@ public class DashBoardController implements Initializable {
     private TextField FiltroCliente;
 
     @FXML
-    private TextField Modificar_Apellido;
+    private TextField Modificar_Pago;
 
     @FXML
     private Button Modificar_Boton_Limpiar;
@@ -94,7 +94,7 @@ public class DashBoardController implements Initializable {
     private TableColumn<?, ?> Modificar_Col_TelefonoAuxiliar;
 
     @FXML
-    private TextField Modificar_Dni;
+    private TextField Modificar_Cantidad;
 
     @FXML
     private TextField Modificar_Domicilio;
@@ -112,7 +112,7 @@ public class DashBoardController implements Initializable {
     private TextField Modificar_ObraSocial;
 
     @FXML
-    private TextField Modificar_Telefono;
+    private TextField Modificar_Fecha;
 
     @FXML
     private TextField Modificar_TelefonoAuxiliar;
@@ -225,6 +225,7 @@ public class DashBoardController implements Initializable {
             Inicio_Form.setVisible(true);
         } else if (event.getSource() == Pagos_btn) {
             Pagos_Form.setVisible(true);
+            MostrarPagos();
         }
         else if(event.getSource() == Balance_btn) {
             Balance_Form.setVisible(true);
@@ -272,10 +273,12 @@ public class DashBoardController implements Initializable {
 
     public ObservableList<ClienteGym> ClientesDesdeDB(){
         ObservableList<ClienteGym> ListaClientes = observableArrayList();
-        String sql = "SELECT c.*, p.FechaPago " +
+        String sql = "SELECT c.IdUsuario,c.ApeYNom,c.Dni,c.Telefono,c.TelefonoAux,c.ObraSocial,c.ObraSocial,c.Domicilio,c.FechaNacimiento,case when p.FechaPago is NOT null and DATE_ADD(p.FechaPago, INTERVAL 1 MONTH) >= CURDATE()" +
+                "                    then 1 " +
+                "                    else 0 " +
+                "                    end as yaPago,p.FechaPago " +
                      "FROM clientes c " +
                      "LEFT JOIN pagos p on p.IdUsuario = c.IdUsuario";
-
         connect = database.connectdb();
 
         try{
@@ -307,6 +310,20 @@ public class DashBoardController implements Initializable {
         return ListaClientes;
     }
 
+    public void ClickAlumnoSeleccionadoPago(){
+        PagosGym pagosGym = PagoTabla.getSelectionModel().getSelectedItem();
+        int num = PagoTabla.getSelectionModel().getSelectedIndex();
+
+        if ((num - 1) < -1) {
+            return;
+        }
+
+        Modificar_Nombre.setText(pagosGym.getApeYNom());
+        Modificar_Id.setText(pagosGym.getIdUsuario().toString());
+        Modificar_Pago.setText(pagosGym.getYaPago());
+        Modificar_Cantidad.setText(pagosGym.getCantidad().toString());
+        Modificar_Fecha.setText(pagosGym.getFechaPago() == null ? "" : pagosGym.getFechaPago().toString());
+    }
     public void ClickAlumnoSeleccionado(){
         ClienteGym cliente = TablaPrincipalID.getSelectionModel().getSelectedItem();
         int num = TablaPrincipalID.getSelectionModel().getSelectedIndex();
@@ -320,13 +337,12 @@ public class DashBoardController implements Initializable {
         CampoDomicilio.setText(cliente.getDomicilio());
         CampoTelefono.setText(cliente.getTelefono().toString());
         CampoFNacimiento.setValue(cliente.getFechaNacimiento());
-        CampoTelefonoAux.setText(cliente.getObraSocial());
+        CampoTelefonoAux.setText(cliente.getTelefonoAux().toString());
         CampoObraSocial.setText(cliente.getObraSocial());
     }
-
     public void AgregarAlumno() {
-        String sql = "INSERT INTO `clientes`(`Nombre`, `Apellido`, `Dni`, `Telefono`, `TelefonoAux`, `ObraSocial`, `Domicilio`, `FechaNacimiento`) VALUES" +
-                     "(?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO `clientes`(`ApeYNom`, `Dni`, `Telefono`, `TelefonoAux`, `ObraSocial`, `Domicilio`, `FechaNacimiento`) VALUES" +
+                     "(?,?,?,?,?,?,?)";
 
         connect = database.connectdb();
 
@@ -346,12 +362,12 @@ public class DashBoardController implements Initializable {
             else{
                 prepare =  connect.prepareStatement(sql);
                 prepare.setString(1,CampoNombre.getText());
-                prepare.setString(3,CampoDni.getText());
-                prepare.setString(4,CampoTelefono.getText());
-                prepare.setString(5,CampoTelefonoAux.getText());
-                prepare.setString(6,CampoObraSocial.getText());
-                prepare.setString(7,CampoDomicilio.getText());
-                prepare.setString(8,CampoFNacimiento.getValue().toString());
+                prepare.setString(2,CampoDni.getText());
+                prepare.setString(3,CampoTelefono.getText());
+                prepare.setString(4,CampoTelefonoAux.getText());
+                prepare.setString(5,CampoObraSocial.getText());
+                prepare.setString(6,CampoDomicilio.getText());
+                prepare.setString(7,CampoFNacimiento.getValue().toString());
                 prepare.executeUpdate();
 
                 MostrarClientes();
@@ -366,7 +382,6 @@ public class DashBoardController implements Initializable {
             ex.printStackTrace();
         }
     }
-
     public void ActualizarAlumno() {
         Alert alert;
         ClienteGym cliente = TablaPrincipalID.getSelectionModel().getSelectedItem();
@@ -436,7 +451,6 @@ public class DashBoardController implements Initializable {
             ex.printStackTrace();
         }
     }
-
     public void FiltroAlumno(){
         FilteredList<ClienteGym> filtro = new FilteredList<>(listaClientes, e->true );
         FiltroCliente.textProperty().addListener((Observable,oldValue,NewValue)->{
@@ -513,11 +527,10 @@ public class DashBoardController implements Initializable {
             ex.printStackTrace();
         }
     }
-
     public void MostrarClientes()
     {
         listaClientes = ClientesDesdeDB();
-        ClienteIdTabla.setCellValueFactory(new PropertyValueFactory<>("IdUsuario"));
+        ClienteIdTabla.setCellValueFactory(new PropertyValueFactory<>("Id"));
         NombreClienteTabla.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
         DniClienteTabla.setCellValueFactory(new PropertyValueFactory<>("Dni"));
         TelefonoClienteTabla.setCellValueFactory(new PropertyValueFactory<>("Telefono"));
@@ -532,7 +545,6 @@ public class DashBoardController implements Initializable {
         LimpiarCampos();
 
     }
-
     public void MostrarPagos()
     {
         listaPagos = PagosDesdeDB();
@@ -552,6 +564,26 @@ public class DashBoardController implements Initializable {
         CampoTelefonoAux.setText("");
         CampoObraSocial.setText("");
         FiltroCliente.setText("");
+    }
+    public void SetearPago(){
+        PagosGym pagosGym = PagoTabla.getSelectionModel().getSelectedItem();
+        int num = PagoTabla.getSelectionModel().getSelectedIndex();
+
+        if ((num - 1) < -1) {
+            return;
+        }
+        IngresarPago();
+    }
+    public void IngresarPago(){
+        try{
+                Parent root = FXMLLoader.load(getClass().getResource("PopUpPagos.fxml"));
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public void CerrarSession(){
