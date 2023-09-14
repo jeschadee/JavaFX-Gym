@@ -1,25 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import java.lang.String?>
-<?import javafx.scene.chart.BarChart?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.shape.Line?>
-<?import javafx.scene.text.Font?>
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import java.lang.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.javafxgym.DashBoardController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.javafxgym.DashBoardController">
    <children>
       <AnchorPane fx:id="Ventana_Principal" prefHeight="200.0" prefWidth="200.0">
          <children>
@@ -105,7 +95,7 @@
                <center>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane fx:id="Inicio_Form" layoutX="6.0" layoutY="7.0" prefHeight="541.0" prefWidth="879.0" stylesheets="@../../css/DashboardDesign.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="Inicio_Form" layoutX="6.0" layoutY="7.0" prefHeight="541.0" prefWidth="879.0" stylesheets="@../../css/DashboardDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="5.0" layoutY="10.0" prefHeight="290.0" prefWidth="880.0" stylesheets="@../../css/DashboardDesign.css">
                                  <styleClass>
@@ -168,14 +158,14 @@
                                  </font>
                               </Label>
                               <DatePicker fx:id="CampoFNacimiento" layoutX="460.0" layoutY="355.0" prefWidth="150.0" stylesheets="@../../css/DashboardDesign.css" />
-                              <AnchorPane layoutX="735.0" layoutY="310.0" prefHeight="149.0" prefWidth="101.0" stylesheets="@../../css/DashboardDesign.css">
+                              <AnchorPane layoutX="713.0" layoutY="310.0" prefHeight="160.0" prefWidth="140.0" stylesheets="@../../css/DashboardDesign.css">
                                  <styleClass>
                                     <String fx:value="white-bg" />
                                     <String fx:value="shadow" />
                                  </styleClass>
                                  <children>
-                                    <ImageView fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
-                                    <Button layoutY="123.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="120.0" styleClass="import-btn" stylesheets="@../../css/DashboardDesign.css" text="Añadir imagen" />
+                                    <ImageView id="image" fx:id="CampoImage" fitHeight="160.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Button layoutY="130.0" mnemonicParsing="false" onMouseClicked="#AgregarImagenCliente" prefHeight="25.0" prefWidth="140.0" styleClass="import-btn" stylesheets="@../../css/DashboardDesign.css" text="Añadir imagen" AnchorPane.bottomAnchor="0.0" />
                                  </children>
                               </AnchorPane>
                               <Button fx:id="btn_Agregar" layoutX="750.0" layoutY="490.0" mnemonicParsing="false" onMouseClicked="#AgregarAlumno" prefHeight="35.0" prefWidth="120.0" styleClass="agregar-btn" stylesheets="@../../css/DashboardDesign.css" text="Agregar" />

@@ -12,11 +12,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.File;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -149,6 +153,10 @@ public class DashBoardController implements Initializable {
 
     @FXML
     private AnchorPane Ventana_Principal;
+
+    @FXML
+    private ImageView CampoImage;
+
     @FXML
     private TextField CampoDni;
 
@@ -217,6 +225,8 @@ public class DashBoardController implements Initializable {
     private ResultSet resultado;
     private ObservableList<ClienteGym> listaClientes;
     private ObservableList<PagosGym> listaPagos;
+    private Image image;
+    private String RutaImg;
     public void CambiarForm(ActionEvent event) {
         Inicio_Form.setVisible(false);
         Pagos_Form.setVisible(false);
@@ -276,7 +286,7 @@ public class DashBoardController implements Initializable {
         String sql = "SELECT c.IdUsuario,c.ApeYNom,c.Dni,c.Telefono,c.TelefonoAux,c.ObraSocial,c.ObraSocial,c.Domicilio,c.FechaNacimiento,case when p.FechaPago is NOT null and DATE_ADD(p.FechaPago, INTERVAL 1 MONTH) >= CURDATE()" +
                 "                    then 1 " +
                 "                    else 0 " +
-                "                    end as yaPago,p.FechaPago " +
+                "                    end as yaPago,p.FechaPago,c.image " +
                      "FROM clientes c " +
                      "LEFT JOIN pagos p on p.IdUsuario = c.IdUsuario";
         connect = database.connectdb();
@@ -297,7 +307,8 @@ public class DashBoardController implements Initializable {
                         resultado.getString("Domicilio"),
                         resultado.getDate("FechaNacimiento"),
                         resultado.getBoolean("YaPago"),
-                        resultado.getDate("FechaPago")
+                        resultado.getDate("FechaPago"),
+                        resultado.getString("image")
                         );
 
                 ListaClientes.add(cliente);
@@ -324,6 +335,17 @@ public class DashBoardController implements Initializable {
         Modificar_Cantidad.setText(pagosGym.getCantidad().toString());
         Modificar_Fecha.setText(pagosGym.getFechaPago() == null ? "" : pagosGym.getFechaPago().toString());
     }
+
+    public void AgregarImagenCliente() {
+        FileChooser open = new FileChooser();
+        File file = open.showOpenDialog(Ventana_Principal.getScene().getWindow());
+
+        if(file != null){
+            RutaImg = file.getAbsolutePath();
+            image = new Image(file.toURI().toString(),140,160,false,true);
+            CampoImage.setImage(image);
+        }
+    }
     public void ClickAlumnoSeleccionado(){
         ClienteGym cliente = TablaPrincipalID.getSelectionModel().getSelectedItem();
         int num = TablaPrincipalID.getSelectionModel().getSelectedIndex();
@@ -339,10 +361,14 @@ public class DashBoardController implements Initializable {
         CampoFNacimiento.setValue(cliente.getFechaNacimiento());
         CampoTelefonoAux.setText(cliente.getTelefonoAux().toString());
         CampoObraSocial.setText(cliente.getObraSocial());
+
+        String uri = "file:" + cliente.getImage();
+        image = new Image(uri, 140,160,false,true);
+        CampoImage.setImage(image);
     }
     public void AgregarAlumno() {
-        String sql = "INSERT INTO `clientes`(`ApeYNom`, `Dni`, `Telefono`, `TelefonoAux`, `ObraSocial`, `Domicilio`, `FechaNacimiento`) VALUES" +
-                     "(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO `clientes`(`ApeYNom`, `Dni`, `Telefono`, `TelefonoAux`, `ObraSocial`, `Domicilio`, `FechaNacimiento`,`image`) VALUES" +
+                     "(?,?,?,?,?,?,?,?)";
 
         connect = database.connectdb();
 
@@ -368,6 +394,11 @@ public class DashBoardController implements Initializable {
                 prepare.setString(5,CampoObraSocial.getText());
                 prepare.setString(6,CampoDomicilio.getText());
                 prepare.setString(7,CampoFNacimiento.getValue().toString());
+
+                String uri = RutaImg;
+                uri = uri.replace("\\","\\\\");
+
+                prepare.setString(8,uri);
                 prepare.executeUpdate();
 
                 MostrarClientes();
@@ -396,7 +427,7 @@ public class DashBoardController implements Initializable {
             return;
         }
 
-        String sql = "Update `clientes`set`ApeYNom`=?, `Dni`=?, `Telefono`=?, `TelefonoAux`=?, `ObraSocial`=?, `Domicilio`=?, `FechaNacimiento`=? WHERE" +
+        String sql = "Update `clientes`set`ApeYNom`=?, `Dni`=?, `Telefono`=?, `TelefonoAux`=?, `ObraSocial`=?, `Domicilio`=?, `FechaNacimiento`=?, `image`=? WHERE" +
                 " IdUsuario = ? ";
 
         connect = database.connectdb();
@@ -430,7 +461,11 @@ public class DashBoardController implements Initializable {
                     prepare.setString(5, CampoObraSocial.getText());
                     prepare.setString(6, CampoDomicilio.getText());
                     prepare.setString(7, CampoFNacimiento.getValue().toString());
-                    prepare.setString(8, cliente.getId().toString());
+                    String uri = RutaImg;
+                    uri = uri.replace("\\","\\\\");
+
+                    prepare.setString(8,uri);
+                    prepare.setString(9, cliente.getId().toString());
                     prepare.executeUpdate();
 
                     MostrarClientes();
@@ -504,27 +539,32 @@ public class DashBoardController implements Initializable {
             alert.showAndWait();
             return;
         }
+        Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);
+        alert2.setTitle("Confirmación");
+        alert2.setHeaderText(null);
+        alert2.setContentText("¿Quiere eliminar al usuario " + cliente.getNombre().toString() + "?");
+        Optional<ButtonType> option = alert2.showAndWait();
+        if(option.isPresent() && option.get().equals(ButtonType.OK)) {
+            String sql = "DELETE FROM `clientes` WHERE" +
+                    " IdUsuario = ? ";
 
-        String sql = "DELETE FROM `clientes` WHERE" +
-                " Id = ? ";
+            connect = database.connectdb();
 
-        connect = database.connectdb();
+            try {
+                prepare = connect.prepareStatement(sql);
+                prepare.setString(1, cliente.getId().toString());
+                prepare.executeUpdate();
 
-        try{
-            prepare =  connect.prepareStatement(sql);
-            prepare.setString(1,cliente.getId().toString());
-            prepare.executeUpdate();
+                MostrarClientes();
 
-            MostrarClientes();
-
-            alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Correcto.");
-            alert.setHeaderText(null);
-            alert.setContentText("Cliente "+ cliente.getNombre().toString() +" Eliminado...");
-            alert.showAndWait();
-        }
-        catch (Exception ex){
-            ex.printStackTrace();
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Correcto.");
+                alert.setHeaderText(null);
+                alert.setContentText("Cliente " + cliente.getNombre().toString() + " Eliminado...");
+                alert.showAndWait();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
     public void MostrarClientes()

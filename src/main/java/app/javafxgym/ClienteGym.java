@@ -15,6 +15,7 @@ public class ClienteGym {
     private Date FechaNacimiento;
     private Date FechaPago;
     private Boolean YaPago;
+    private  String Image;
     public Date getFechaPago() { return FechaPago; }
     public void setFechaPago(Date fechaPago) { FechaPago = fechaPago; }
     public String getYaPago() { return YaPago ? "Si" : "No"; }
@@ -59,7 +60,8 @@ public class ClienteGym {
         return Domicilio;
     }
     public void setDomicilio(String domicilio) { Domicilio = domicilio; }
-
+    public String getImage() { return Image; }
+    public void setImage(String image) {this.Image = image; }
     public LocalDate getFechaNacimiento() {
         LocalDate localDate = LocalDate.parse( new SimpleDateFormat("yyyy-MM-dd").format(FechaNacimiento) );
         return localDate;
@@ -69,7 +71,7 @@ public class ClienteGym {
         FechaNacimiento = fechaNacimiento;
     }
 
-    public ClienteGym(Integer id, String nombre, Long dni, Long telefono, Long telefonoAux, String obraSocial, String domicilio, Date fechaNacimiento,Boolean yaPago, Date fechaPago) {
+    public ClienteGym(Integer id, String nombre, Long dni, Long telefono, Long telefonoAux, String obraSocial, String domicilio, Date fechaNacimiento,Boolean yaPago, Date fechaPago, String image) {
         Id = id;
         Nombre = nombre;
         YaPago = yaPago;
@@ -80,5 +82,6 @@ public class ClienteGym {
         Domicilio = domicilio;
         FechaNacimiento = fechaNacimiento;
         FechaPago = fechaPago;
+        this.Image = image;
     }
 }
