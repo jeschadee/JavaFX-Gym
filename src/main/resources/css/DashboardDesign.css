@@ -54,7 +54,15 @@
 }
 
 .card{
-    -fx-background-color:black;
+    -fx-background-color:#36454F;
+    -fx-background-radius:4px;
+}
+.card-green{
+    -fx-background-color:#32CD32;
+    -fx-background-radius:4px;
+}
+.card-red{
+    -fx-background-color:#e00000BF;
     -fx-background-radius:4px;
 }
 .table-view{

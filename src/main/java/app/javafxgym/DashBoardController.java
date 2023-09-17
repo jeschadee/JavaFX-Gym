@@ -10,6 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -194,6 +196,12 @@ public class DashBoardController implements Initializable {
     private TableView<PagosGym> PagoTabla;
 
     @FXML
+    private TableColumn<?, ?> PagoDiasRestantes;
+
+    @FXML
+    private TextField Modificar_NuevaCantidad;
+
+    @FXML
     private TableColumn<PagosGym, Integer> PagoTablaCantidad;
 
     @FXML
@@ -207,6 +215,22 @@ public class DashBoardController implements Initializable {
 
     @FXML
     private TableColumn<PagosGym, String> PagoTablaPago;
+
+    @FXML
+    private Label labelTotalActivos;
+
+    @FXML
+    private Label labelTotalClientes;
+
+    @FXML
+    private Label labelTotalInactivos;
+
+    @FXML
+    private ImageView pago_img;
+
+    @FXML
+    private BarChart<?, ?> GraficoTotal;
+
 
     public void Cerrar(){
         System.exit(0);
@@ -239,21 +263,30 @@ public class DashBoardController implements Initializable {
         }
         else if(event.getSource() == Balance_btn) {
             Balance_Form.setVisible(true);
+            ActualizarLabelsTotales();
         }
+    }
+
+    public void ActualizarLabelsTotales(){
+        TotalClientes();
+        TotalInactivos();
+        TotalActivos();
+        GraficoTotalClientes();
     }
 
     public ObservableList<PagosGym> PagosDesdeDB() {
         ObservableList<PagosGym> ListaPagos = observableArrayList();
-        String sql = "select c.IdUsuario ,c.ApeYNom, " +
-                    "p.Cantidad, " +
-                    "p.FechaPago, " +
-                    "case when p.FechaPago is NOT null and DATE_ADD(p.FechaPago, INTERVAL 1 MONTH) >= CURDATE() " +
-                    "then 1 " +
-                    "else 0 " +
-                    "end as yaPago, " +
-                    "case when p.FechaPago is NOT null then DATEDIFF(DATE_ADD(p.FechaPago, INTERVAL 1 MONTH),CURDATE()) else 0 end AS DiasRestantes " +
-                    "from clientes c " +
-                    "left join pagos p on c.IdUsuario = p.IdUsuario";
+        String sql = "WITH CtePagos as(select max(p.IdPago) as IdPago, c.IdUsuario from clientes c inner join pagos p on c.IdUsuario = p.IdUsuario group by c.IdUsuario)\n" +
+                "select c.IdUsuario ,c.ApeYNom, \n" +
+                "p.Cantidad, \n" +
+                "p.FechaPago, \n" +
+                "case when p.FechaPago is NOT null and DATE_ADD(p.FechaPago, INTERVAL 1 MONTH) >= CURDATE() \n" +
+                "then 1 \n" +
+                "else 0 end as yaPago, c.image, \n" +
+                "case when p.FechaPago is NOT null then DATEDIFF(DATE_ADD(p.FechaPago, INTERVAL 1 MONTH),CURDATE()) else 0 end AS DiasRestantes\n" +
+                "from clientes c \n" +
+                "left join CtePagos cp on cp.IdUsuario = c.IdUsuario \n" +
+                "left join pagos p on cp.IdPago = P.IdPago";
 
         connect = database.connectdb();
         try{
@@ -268,7 +301,8 @@ public class DashBoardController implements Initializable {
                         resultado.getInt("Cantidad"),
                         resultado.getDate("FechaPago"),
                         resultado.getBoolean("YaPago"),
-                        resultado.getInt("DiasRestantes")
+                        resultado.getInt("DiasRestantes"),
+                        resultado.getString("image")
                 );
 
                 ListaPagos.add(pagosGym);
@@ -283,12 +317,16 @@ public class DashBoardController implements Initializable {
 
     public ObservableList<ClienteGym> ClientesDesdeDB(){
         ObservableList<ClienteGym> ListaClientes = observableArrayList();
-        String sql = "SELECT c.IdUsuario,c.ApeYNom,c.Dni,c.Telefono,c.TelefonoAux,c.ObraSocial,c.ObraSocial,c.Domicilio,c.FechaNacimiento,case when p.FechaPago is NOT null and DATE_ADD(p.FechaPago, INTERVAL 1 MONTH) >= CURDATE()" +
-                "                    then 1 " +
-                "                    else 0 " +
-                "                    end as yaPago,p.FechaPago,c.image " +
-                     "FROM clientes c " +
-                     "LEFT JOIN pagos p on p.IdUsuario = c.IdUsuario";
+        String sql =
+                "WITH CtePagos as(select max(p.IdPago) as IdPago, c.IdUsuario from clientes c inner join pagos p on c.IdUsuario = p.IdUsuario group by c.IdUsuario)\n" +
+                "SELECT c.IdUsuario,c.ApeYNom,c.Dni,c.Telefono,c.TelefonoAux,c.ObraSocial,c.Domicilio,c.FechaNacimiento,\n" +
+                "case when p.FechaPago is NOT null and DATE_ADD(p.FechaPago, INTERVAL 1 MONTH) >= CURDATE()   \n" +
+                "then 1                    \n" +
+                "else 0                     \n" +
+                "end as yaPago,p.FechaPago,c.image \n" +
+                "FROM clientes c\n" +
+                "left join CtePagos cp on cp.IdUsuario = c.IdUsuario\n" +
+                "LEFT JOIN pagos p on p.IdPago = cp.IdPago";
         connect = database.connectdb();
 
         try{
@@ -332,8 +370,11 @@ public class DashBoardController implements Initializable {
         Modificar_Nombre.setText(pagosGym.getApeYNom());
         Modificar_Id.setText(pagosGym.getIdUsuario().toString());
         Modificar_Pago.setText(pagosGym.getYaPago());
-        Modificar_Cantidad.setText(pagosGym.getCantidad().toString());
+        Modificar_Cantidad.setText(pagosGym.getMontoLocal());
         Modificar_Fecha.setText(pagosGym.getFechaPago() == null ? "" : pagosGym.getFechaPago().toString());
+        String uri = "file:" + pagosGym.getImg();
+        image = new Image(uri, 200,200,false,true);
+        pago_img.setImage(image);
     }
 
     public void AgregarImagenCliente() {
@@ -590,10 +631,97 @@ public class DashBoardController implements Initializable {
         listaPagos = PagosDesdeDB();
         PagoTablaId.setCellValueFactory(new PropertyValueFactory<>("IdUsuario"));
         PagoTablaNombre.setCellValueFactory(new PropertyValueFactory<>("ApeYNom"));
-        PagoTablaCantidad.setCellValueFactory(new PropertyValueFactory<>("Cantidad"));
+        PagoTablaCantidad.setCellValueFactory(new PropertyValueFactory<>("MontoLocal"));
         PagoTablaPago.setCellValueFactory(new PropertyValueFactory<>("YaPago"));
         PagoTablaFecha.setCellValueFactory(new PropertyValueFactory<>("FechaPago"));
+        PagoDiasRestantes.setCellValueFactory(new PropertyValueFactory<>("DiasRestantes"));
         PagoTabla.setItems(listaPagos);
+    }
+
+    public void TotalClientes(){
+        String sql = "select count(*) as cantidadClientes from clientes";
+
+        connect = database.connectdb();
+        int cantidad = 0;
+        try{
+            prepare = connect.prepareStatement(sql);
+            resultado = prepare.executeQuery();
+
+            while (resultado.next()){
+                cantidad = resultado.getInt("cantidadClientes");
+            }
+            labelTotalClientes.setText(String.valueOf(cantidad));
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+    public void TotalActivos(){
+        String sql = "WITH CtePagos as(select max(p.IdPago) as IdPago, c.IdUsuario from clientes c inner join pagos p on c.IdUsuario = p.IdUsuario group by c.IdUsuario)\n" +
+                    "select count(*) as cantidadClientes\n" +
+                    "from clientes c\n" +
+                    "\tleft join CtePagos cp on cp.IdUsuario = c.IdUsuario\n" +
+                    "    left join pagos p on p.IdPago = cp.IdPago\n" +
+                    "where p.IdPago is not null";
+
+        connect = database.connectdb();
+        int cantidad = 0;
+        try{
+            prepare = connect.prepareStatement(sql);
+            resultado = prepare.executeQuery();
+
+            while (resultado.next()){
+                cantidad = resultado.getInt("cantidadClientes");
+            }
+            labelTotalActivos.setText(String.valueOf(cantidad));
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+    public void TotalInactivos(){
+        String sql = "WITH CtePagos as(select max(p.IdPago) as IdPago, c.IdUsuario from clientes c inner join pagos p on c.IdUsuario = p.IdUsuario group by c.IdUsuario)\n" +
+                "select count(*) as cantidadClientes\n" +
+                "from clientes c\n" +
+                "\tleft join CtePagos cp on cp.IdUsuario = c.IdUsuario\n" +
+                "    left join pagos p on p.IdPago = cp.IdPago\n" +
+                "where p.IdPago is null";
+
+        connect = database.connectdb();
+        int cantidad = 0;
+        try{
+            prepare = connect.prepareStatement(sql);
+            resultado = prepare.executeQuery();
+
+            while (resultado.next()){
+                cantidad = resultado.getInt("cantidadClientes");
+            }
+            labelTotalInactivos.setText(String.valueOf(cantidad));
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+    public void GraficoTotalClientes(){
+        GraficoTotal.getData().clear();
+        String sql = "select CONCAT(UPPER(cast(monthname(FechaPago) as CHAR)),\" \", cast(year(FechaPago) as CHAR)) as fecha, count(*) as cantidad from pagos\n" +
+                    "group by monthname(FechaPago), year(FechaPago)\n";
+
+        connect = database.connectdb();
+        try{
+            XYChart.Series chart = new XYChart.Series();
+            prepare = connect.prepareStatement(sql);
+            resultado = prepare.executeQuery();
+
+            while (resultado.next()){
+                chart.getData().add(new XYChart.Data(resultado.getString("fecha"),resultado.getInt("cantidad")));
+            }
+
+            GraficoTotal.getData().add(chart);
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
     public void LimpiarCampos(){
         CampoNombre.setText("");
@@ -604,26 +732,78 @@ public class DashBoardController implements Initializable {
         CampoTelefonoAux.setText("");
         CampoObraSocial.setText("");
         FiltroCliente.setText("");
-    }
-    public void SetearPago(){
-        PagosGym pagosGym = PagoTabla.getSelectionModel().getSelectedItem();
-        int num = PagoTabla.getSelectionModel().getSelectedIndex();
+        CampoImage.setImage(null);
+        RutaImg = "";
+        image = null;
 
-        if ((num - 1) < -1) {
-            return;
-        }
-        IngresarPago();
+    }
+    public void LimpiarCamposPago(){
+        Modificar_Nombre.setText("");
+        Modificar_Pago.setText("");
+        Modificar_Id.setText("");
+        Modificar_Fecha.setText("");
+        Modificar_Cantidad.setText("");
+        Modificar_NuevaCantidad.setText("");
+        pago_img.setImage(null);
     }
     public void IngresarPago(){
+        PagosGym pagosGym = PagoTabla.getSelectionModel().getSelectedItem();
+        int num = PagoTabla.getSelectionModel().getSelectedIndex();
+        Alert alert;
+        if ((num - 1) < -1) {
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("¡Debe seleccionar un usuario para agregar pago!");
+            alert.showAndWait();
+            return;
+        }
+        String sql = "INSERT INTO `pagos`(`IdUsuario`, `Cantidad`) VALUES" +
+                "(?,?)";
+        connect = database.connectdb();
+
         try{
-                Parent root = FXMLLoader.load(getClass().getResource("PopUpPagos.fxml"));
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root));
+            if( Modificar_NuevaCantidad.getText().isEmpty())
+            {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Debe ingresar cantidad del nuevo pago.");
+                alert.showAndWait();
+                return;
+            }
+            else{
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmar");
+                alert.setHeaderText(null);
+                alert.setContentText("¿Esta seguro de agregar nuevo pago a: "+ pagosGym.getApeYNom() +"?");
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if(option.get().equals(ButtonType.OK)) {
+
+                    prepare = connect.prepareStatement(sql);
+                    prepare.setString(1, pagosGym.getIdUsuario().toString());
+                    prepare.setString(2, Modificar_NuevaCantidad.getText());
+                    prepare.executeUpdate();
+
+                    MostrarPagos();
+                    LimpiarCamposPago();
+                    alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Correcto.");
+                    alert.setHeaderText(null);
+                    alert.setContentText("¡Cliente Actualizado!");
+                    alert.showAndWait();
+                }
+                else{
+                    return;
+                }
+
+            }
         }
-        catch (Exception e)
-        {
-            e.printStackTrace();
+        catch (Exception ex){
+            ex.printStackTrace();
         }
+
     }
 
     public void CerrarSession(){
@@ -664,8 +844,6 @@ public class DashBoardController implements Initializable {
         {
            e.printStackTrace();
         }
-
-
     }
     public void InicializarGrillas(){
         Inicio_Form.setVisible(true);
@@ -680,5 +858,6 @@ public class DashBoardController implements Initializable {
         MostrarClientes();
         MostrarPagos();
         FiltroAlumno();
+        GraficoTotalClientes();
     }
 }

@@ -1,24 +1,30 @@
 package app.javafxgym;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Locale;
 
 public class PagosGym {
-    public Integer IdUsuario;
-    public String ApeYNom;
-    public Integer Cantidad;
-    public Date FechaPago;
-    public String YaPago;
-    public Integer DiasRestantes;
+    private Integer IdUsuario;
+    private String ApeYNom;
+    private Integer Cantidad;
+    private Date FechaPago;
+    private String YaPago;
+    private Integer DiasRestantes;
+    private String Img;
+    private String MontoLocal;
 
-    public PagosGym(Integer idUsuario, String apeYNom, int cantidad, Date fechaPago, Boolean yaPago, Integer diasRestantes) {
+    public PagosGym(Integer idUsuario, String apeYNom, int cantidad, Date fechaPago, Boolean yaPago, Integer diasRestantes, String img) {
         ApeYNom = apeYNom;
         Cantidad = cantidad;
         FechaPago = fechaPago;
-        YaPago = yaPago ? "Si":"No";
+        YaPago = yaPago ? "Pagado":"No pagó";
         DiasRestantes = diasRestantes;
         IdUsuario = idUsuario;
+        Img = img;
+        MontoLocal = getMontoLocal();
     }
 
     public Integer getDiasRestantes() {
@@ -59,5 +65,18 @@ public class PagosGym {
             LocalDate localDate = LocalDate.parse( new SimpleDateFormat("yyyy-MM-dd").format(FechaPago));
             return localDate;
         }
+    }
+    public String getImg() {
+        return Img;
+    }
+
+    public String getMontoLocal(){
+        Locale locale = new Locale("en", "US");
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
+        currencyFormatter.setMaximumFractionDigits(0);
+        return currencyFormatter.format(Cantidad);
+    }
+    public void setImg(String img) {
+        Img = img;
     }
 }
