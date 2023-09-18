@@ -276,17 +276,7 @@ public class DashBoardController implements Initializable {
 
     public ObservableList<PagosGym> PagosDesdeDB() {
         ObservableList<PagosGym> ListaPagos = observableArrayList();
-        String sql = "WITH CtePagos as(select max(p.IdPago) as IdPago, c.IdUsuario from clientes c inner join pagos p on c.IdUsuario = p.IdUsuario group by c.IdUsuario)\n" +
-                "select c.IdUsuario ,c.ApeYNom, \n" +
-                "p.Cantidad, \n" +
-                "p.FechaPago, \n" +
-                "case when p.FechaPago is NOT null and DATE_ADD(p.FechaPago, INTERVAL 1 MONTH) >= CURDATE() \n" +
-                "then 1 \n" +
-                "else 0 end as yaPago, c.image, \n" +
-                "case when p.FechaPago is NOT null then DATEDIFF(DATE_ADD(p.FechaPago, INTERVAL 1 MONTH),CURDATE()) else 0 end AS DiasRestantes\n" +
-                "from clientes c \n" +
-                "left join CtePagos cp on cp.IdUsuario = c.IdUsuario \n" +
-                "left join pagos p on cp.IdPago = P.IdPago";
+        String sql = "select c.IdUsuario ,c.ApeYNom, p.Cantidad, p.FechaPago, case when p.FechaPago is NOT null and DATE_ADD(p.FechaPago, INTERVAL 1 MONTH) >= CURDATE() then 1 else 0 end as yaPago, c.image, case when p.FechaPago is NOT null then DATEDIFF(DATE_ADD(p.FechaPago, INTERVAL 1 MONTH),CURDATE()) else 0 end AS DiasRestantes from clientes c left join (select max(p.IdPago) as IdPago, c.IdUsuario from clientes c inner join pagos p on c.IdUsuario = p.IdUsuario group by c.IdUsuario) cp on cp.IdUsuario = c.IdUsuario left join pagos p on cp.IdPago = P.IdPago";
 
         connect = database.connectdb();
         try{
@@ -318,15 +308,14 @@ public class DashBoardController implements Initializable {
     public ObservableList<ClienteGym> ClientesDesdeDB(){
         ObservableList<ClienteGym> ListaClientes = observableArrayList();
         String sql =
-                "WITH CtePagos as(select max(p.IdPago) as IdPago, c.IdUsuario from clientes c inner join pagos p on c.IdUsuario = p.IdUsuario group by c.IdUsuario)\n" +
                 "SELECT c.IdUsuario,c.ApeYNom,c.Dni,c.Telefono,c.TelefonoAux,c.ObraSocial,c.Domicilio,c.FechaNacimiento,\n" +
-                "case when p.FechaPago is NOT null and DATE_ADD(p.FechaPago, INTERVAL 1 MONTH) >= CURDATE()   \n" +
-                "then 1                    \n" +
-                "else 0                     \n" +
-                "end as yaPago,p.FechaPago,c.image \n" +
-                "FROM clientes c\n" +
-                "left join CtePagos cp on cp.IdUsuario = c.IdUsuario\n" +
-                "LEFT JOIN pagos p on p.IdPago = cp.IdPago";
+                        "                case when p.FechaPago is NOT null and DATE_ADD(p.FechaPago, INTERVAL 1 MONTH) >= CURDATE()   \n" +
+                        "                then 1                   \n" +
+                        "                else 0                    \n" +
+                        "                end as yaPago,p.FechaPago,c.image \n" +
+                        "                FROM clientes c\n" +
+                        "                left join (select max(p.IdPago) as IdPago, c.IdUsuario from clientes c inner join pagos p on c.IdUsuario = p.IdUsuario group by c.IdUsuario) cp on cp.IdUsuario = c.IdUsuario\n" +
+                        "                LEFT JOIN pagos p on p.IdPago = cp.IdPago" ;
         connect = database.connectdb();
 
         try{
@@ -657,12 +646,7 @@ public class DashBoardController implements Initializable {
         }
     }
     public void TotalActivos(){
-        String sql = "WITH CtePagos as(select max(p.IdPago) as IdPago, c.IdUsuario from clientes c inner join pagos p on c.IdUsuario = p.IdUsuario group by c.IdUsuario)\n" +
-                    "select count(*) as cantidadClientes\n" +
-                    "from clientes c\n" +
-                    "\tleft join CtePagos cp on cp.IdUsuario = c.IdUsuario\n" +
-                    "    left join pagos p on p.IdPago = cp.IdPago\n" +
-                    "where p.IdPago is not null";
+        String sql = "select count(*) as cantidadClientes from clientes c left join (select max(p.IdPago) as IdPago, c.IdUsuario from clientes c inner join pagos p on c.IdUsuario = p.IdUsuario group by c.IdUsuario) cp on cp.IdUsuario = c.IdUsuario left join pagos p on p.IdPago = cp.IdPago where p.IdPago is not null";
 
         connect = database.connectdb();
         int cantidad = 0;
@@ -680,12 +664,7 @@ public class DashBoardController implements Initializable {
         }
     }
     public void TotalInactivos(){
-        String sql = "WITH CtePagos as(select max(p.IdPago) as IdPago, c.IdUsuario from clientes c inner join pagos p on c.IdUsuario = p.IdUsuario group by c.IdUsuario)\n" +
-                "select count(*) as cantidadClientes\n" +
-                "from clientes c\n" +
-                "\tleft join CtePagos cp on cp.IdUsuario = c.IdUsuario\n" +
-                "    left join pagos p on p.IdPago = cp.IdPago\n" +
-                "where p.IdPago is null";
+        String sql = "select count(*) as cantidadClientes from clientes c left join (select max(p.IdPago) as IdPago, c.IdUsuario from clientes c inner join pagos p on c.IdUsuario = p.IdUsuario group by c.IdUsuario) cp on cp.IdUsuario = c.IdUsuario left join pagos p on p.IdPago = cp.IdPago where p.IdPago is null";
 
         connect = database.connectdb();
         int cantidad = 0;

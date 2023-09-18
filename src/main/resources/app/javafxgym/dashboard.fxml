@@ -183,7 +183,7 @@
                               <String fx:value="shadow" />
                            </styleClass>
                         </AnchorPane>
-                        <AnchorPane fx:id="Pagos_Form" prefHeight="555.0" prefWidth="891.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="Pagos_Form" prefHeight="555.0" prefWidth="891.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="5.0" layoutY="10.0" prefHeight="535.0" prefWidth="330.0" stylesheets="@../../css/DashboardDesign.css">
                                  <styleClass>
@@ -265,7 +265,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="Balance_Form" layoutX="122.0" layoutY="144.0" prefHeight="555.0" prefWidth="889.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="Balance_Form" layoutX="122.0" layoutY="144.0" prefHeight="555.0" prefWidth="889.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="7.0" layoutY="8.0" prefHeight="540.0" prefWidth="877.0" stylesheets="@../../css/DashboardDesign.css">
                                  <styleClass>
@@ -301,7 +301,7 @@
                                                       <Font name="Tahoma Bold" size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <Label fx:id="labelTotalInactivos" alignment="CENTER_RIGHT" layoutX="90.0" layoutY="15.0" prefHeight="32.0" prefWidth="170.0" text="0" textFill="WHITE">
+                                                <Label fx:id="labelTotalActivos" alignment="CENTER_RIGHT" layoutX="90.0" layoutY="15.0" prefHeight="32.0" prefWidth="170.0" text="0" textFill="WHITE">
                                                    <font>
                                                       <Font name="Tahoma Bold" size="25.0" />
                                                    </font>
@@ -317,7 +317,7 @@
                                                       <Font name="Tahoma Bold" size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <Label fx:id="labelTotalActivos" alignment="CENTER_RIGHT" layoutX="90.0" layoutY="15.0" prefHeight="32.0" prefWidth="170.0" text="0" textFill="WHITE">
+                                                <Label fx:id="labelTotalInactivos" alignment="CENTER_RIGHT" layoutX="90.0" layoutY="15.0" prefHeight="32.0" prefWidth="170.0" text="0" textFill="WHITE">
                                                    <font>
                                                       <Font name="Tahoma Bold" size="25.0" />
                                                    </font>
