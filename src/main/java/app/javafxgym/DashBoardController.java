@@ -255,8 +255,10 @@ public class DashBoardController implements Initializable {
         Inicio_Form.setVisible(false);
         Pagos_Form.setVisible(false);
         Balance_Form.setVisible(false);
+
         if (event.getSource() == Inicio_btn) {
             Inicio_Form.setVisible(true);
+            MostrarClientes();
         } else if (event.getSource() == Pagos_btn) {
             Pagos_Form.setVisible(true);
             MostrarPagos();

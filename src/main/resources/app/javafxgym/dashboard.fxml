@@ -45,7 +45,7 @@
                      <children>
                         <AnchorPane layoutX="-22.0" layoutY="33.0" prefHeight="555.0" prefWidth="211.0" styleClass="nav-form" stylesheets="@../../css/DashboardDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Button fx:id="Pagos_btn" layoutX="17.0" layoutY="266.0" mnemonicParsing="false" onAction="#CambiarForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../../css/DashboardDesign.css" text="Administrar Pago">
+                              <Button fx:id="Inicio_btn" layoutX="5.0" layoutY="265.0" mnemonicParsing="false" onAction="#CambiarForm" prefHeight="35.0" prefWidth="200.0" styleClass="nav-btn" stylesheets="@../../css/DashboardDesign.css" text="Administrar Usuarios">
                                  <graphic>
                                     <FontAwesomeIconView glyphName="USER_PLUS" size="1.5em" />
                                  </graphic>
@@ -54,7 +54,7 @@
                                  </font>
                               </Button>
                               <Line endX="90.0" layoutX="103.0" layoutY="189.0" startX="-85.0" stroke="WHITE" />
-                              <Button fx:id="Inicio_btn" layoutX="16.0" layoutY="213.0" mnemonicParsing="false" onAction="#CambiarForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../../css/DashboardDesign.css" text="Inicio" textFill="#111111">
+                              <Button fx:id="Balance_btn" layoutX="5.0" layoutY="215.0" mnemonicParsing="false" onAction="#CambiarForm" prefHeight="35.0" prefWidth="200.0" styleClass="nav-btn" stylesheets="@../../css/DashboardDesign.css" text="Inicio" textFill="#111111">
                                  <graphic>
                                     <FontAwesomeIconView glyphName="HOME" size="1.5em" />
                                  </graphic>
@@ -62,7 +62,7 @@
                                     <Font size="16.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="Balance_btn" layoutX="17.0" layoutY="319.0" mnemonicParsing="false" onAction="#CambiarForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../../css/DashboardDesign.css" text="Balance Mes Actual">
+                              <Button fx:id="Pagos_btn" layoutX="5.0" layoutY="315.0" mnemonicParsing="false" onAction="#CambiarForm" prefHeight="35.0" prefWidth="200.0" styleClass="nav-btn" stylesheets="@../../css/DashboardDesign.css" text="Administrar Pagos">
                                  <graphic>
                                     <FontAwesomeIconView glyphName="MONEY" />
                                  </graphic>
@@ -326,7 +326,7 @@
                                           </AnchorPane>
                                        </children>
                                     </AnchorPane>
-                                    <BarChart fx:id="GraficoTotal" alternativeRowFillVisible="false" categoryGap="20.0" layoutX="15.0" layoutY="140.0" prefHeight="380.0" prefWidth="850.0" title="Evolucion Pagos">
+                                    <BarChart fx:id="GraficoTotal" alternativeRowFillVisible="false" categoryGap="20.0" layoutX="15.0" layoutY="140.0" prefHeight="380.0" prefWidth="850.0" title="Evolucion Pagos" AnchorPane.bottomAnchor="20.0">
                                       <xAxis>
                                         <CategoryAxis side="BOTTOM" />
                                       </xAxis>
