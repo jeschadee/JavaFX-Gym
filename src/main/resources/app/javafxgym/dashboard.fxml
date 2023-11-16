@@ -183,7 +183,7 @@
                               <String fx:value="shadow" />
                            </styleClass>
                         </AnchorPane>
-                        <AnchorPane fx:id="Pagos_Form" prefHeight="555.0" prefWidth="891.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="Pagos_Form" prefHeight="555.0" prefWidth="891.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="5.0" layoutY="10.0" prefHeight="535.0" prefWidth="330.0" stylesheets="@../../css/DashboardDesign.css">
                                  <styleClass>
@@ -251,7 +251,7 @@
                                     <String fx:value="shadow" />
                                  </styleClass>
                                  <children>
-                                    <TableView fx:id="PagoTabla" onMouseClicked="#ClickAlumnoSeleccionadoPago" prefHeight="429.0" prefWidth="407.0" stylesheets="@../../css/DashboardDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <TableView fx:id="PagoTabla" layoutY="48.0" onMouseClicked="#ClickAlumnoSeleccionadoPago" prefHeight="487.0" prefWidth="535.0" stylesheets="@../../css/DashboardDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="48.0">
                                       <columns>
                                         <TableColumn fx:id="PagoTablaId" prefWidth="40.0" text="Id" />
                                           <TableColumn fx:id="PagoTablaNombre" minWidth="8.0" prefWidth="147.0" text="Nombre" />
@@ -261,11 +261,13 @@
                                           <TableColumn fx:id="PagoDiasRestantes" prefWidth="98.0" text="Dias Restantes" />
                                       </columns>
                                     </TableView>
+                                    <TextField fx:id="FiltroClientePagos" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="270.0" promptText="      Buscar" styleClass="search" stylesheets="@../../css/DashboardDesign.css" />
+                                    <FontAwesomeIconView glyphName="SEARCH" layoutX="20.0" layoutY="31.0" size="1.5em" />
                                  </children>
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="Balance_Form" layoutX="122.0" layoutY="144.0" prefHeight="555.0" prefWidth="889.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="Balance_Form" layoutX="122.0" layoutY="144.0" prefHeight="555.0" prefWidth="889.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="7.0" layoutY="8.0" prefHeight="540.0" prefWidth="877.0" stylesheets="@../../css/DashboardDesign.css">
                                  <styleClass>

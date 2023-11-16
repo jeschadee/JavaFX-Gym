@@ -64,6 +64,9 @@ public class DashBoardController implements Initializable {
     private TextField FiltroCliente;
 
     @FXML
+    private TextField FiltroClientePagos;
+
+    @FXML
     private TextField Modificar_Pago;
 
     @FXML
@@ -558,6 +561,40 @@ public class DashBoardController implements Initializable {
         listaFiltrada.comparatorProperty().bind(TablaPrincipalID.comparatorProperty());
         TablaPrincipalID.setItems(listaFiltrada);
     }
+    public void FiltroPagoAlumno(){
+        FilteredList<PagosGym> filtro2 = new FilteredList<>(listaPagos, e->true );
+        FiltroClientePagos.textProperty().addListener((Observador,valorViejo,valorNuevo)->{
+            filtro2.setPredicate(x->{
+                if(valorNuevo == null || valorNuevo.isEmpty())
+                    return true;
+
+                String palabraBuscar = valorNuevo.toLowerCase();
+
+                if(x.getIdUsuario().toString().contains(palabraBuscar))
+                    return true;
+                else if (x.getApeYNom().toLowerCase().contains(palabraBuscar)) {
+                    return true;
+                }
+                else if (x.getYaPago().toLowerCase().contains(palabraBuscar)) {
+                    return true;
+                }
+                else if (x.getMontoLocal().toString().contains(palabraBuscar)) {
+                    return true;
+                }
+                else if (x.getFechaPago().toString().contains(palabraBuscar)) {
+                    return true;
+                }
+                else if (x.getDiasRestantes().toString().contains(palabraBuscar)) {
+                    return true;
+                }
+                else return  false;
+            });
+        });
+
+        SortedList<PagosGym> listaFiltrada2 = new SortedList<>(filtro2);
+        listaFiltrada2.comparatorProperty().bind(PagoTabla.comparatorProperty());
+        PagoTabla.setItems(listaFiltrada2);
+    }
     public void EliminarAlumno() {
         Alert alert;
         ClienteGym cliente = TablaPrincipalID.getSelectionModel().getSelectedItem();
@@ -615,6 +652,7 @@ public class DashBoardController implements Initializable {
         TablaPrincipalID.setItems(listaClientes);
 
         LimpiarCampos();
+        FiltroAlumno();
 
     }
     public void MostrarPagos()
@@ -627,6 +665,9 @@ public class DashBoardController implements Initializable {
         PagoTablaFecha.setCellValueFactory(new PropertyValueFactory<>("FechaPago"));
         PagoDiasRestantes.setCellValueFactory(new PropertyValueFactory<>("DiasRestantes"));
         PagoTabla.setItems(listaPagos);
+
+        LimpiarCamposPago();
+        FiltroPagoAlumno();
     }
 
     public void TotalClientes(){
@@ -726,6 +767,7 @@ public class DashBoardController implements Initializable {
         Modificar_Cantidad.setText("");
         Modificar_NuevaCantidad.setText("");
         pago_img.setImage(null);
+        FiltroClientePagos.setText("");
     }
     public void IngresarPago(){
         PagosGym pagosGym = PagoTabla.getSelectionModel().getSelectedItem();
@@ -838,7 +880,6 @@ public class DashBoardController implements Initializable {
         InicializarGrillas();
         MostrarClientes();
         MostrarPagos();
-        FiltroAlumno();
         GraficoTotalClientes();
     }
 }
