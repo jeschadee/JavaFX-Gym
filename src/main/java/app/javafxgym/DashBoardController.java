@@ -581,7 +581,7 @@ public class DashBoardController implements Initializable {
                 else if (x.getMontoLocal().toString().contains(palabraBuscar)) {
                     return true;
                 }
-                else if (x.getFechaPago().toString().contains(palabraBuscar)) {
+                else if (x.getFechaPago() != null && x.getFechaPago().toString().contains(palabraBuscar)) {
                     return true;
                 }
                 else if (x.getDiasRestantes().toString().contains(palabraBuscar)) {
